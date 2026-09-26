@@ -3,11 +3,53 @@
   <head>
     <meta charset="UTF-8" />
     <title>Semantic Blocker</title>
+    <link rel="stylesheet" href="../../src/ui/base.css" />
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <h1>Semantic Blocker</h1>
-    <p><span id="blocked">0</span> blocked · <span id="semantic">0</span> semantically detected</p>
+    <header>
+      <h1>Semantic Blocker</h1>
+      <span id="host" class="muted"></span>
+    </header>
+
+    <label class="toggle">
+      <input id="site-enabled" type="checkbox" />
+      <span>Enabled on this site</span>
+    </label>
+
+    <section id="semantic">
+      <p id="summary"></p>
+      <p id="shadow-note" class="note" hidden>
+        Shadow mode: semantic detections are recorded but not hidden.
+      </p>
+      <ul id="entries"></ul>
+      <button id="restore-all" type="button" hidden>Show all hidden items</button>
+    </section>
+
+    <p id="unavailable" class="muted" hidden>Not available on this page.</p>
+
+    <footer>
+      <button id="open-options" type="button">Settings</button>
+    </footer>
+
+    <template id="entry-template">
+      <li>
+        <div class="entry-head">
+          <span class="entry-kind"></span>
+          <span class="entry-state"></span>
+        </div>
+        <div class="entry-text muted"></div>
+        <div class="entry-actions">
+          <button class="restore" type="button" hidden>Restore</button>
+          <span class="feedback" hidden>
+            Wrongly hidden?
+            <button class="feedback-yes" type="button">Yes</button>
+            <button class="feedback-no" type="button">No</button>
+          </span>
+        </div>
+      </li>
+    </template>
+
     <script type="module" src="./main.ts"></script>
   </body>
 </html>

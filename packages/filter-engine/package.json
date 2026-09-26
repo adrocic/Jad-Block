@@ -1,0 +1,15 @@
+{
+  "name": "@semantic-blocker/filter-engine",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@adguard/dnr-converter": "^1.1.2",
+    "@adguard/re2-wasm": "1.2.0"
+  }
+}

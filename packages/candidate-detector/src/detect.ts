@@ -1,5 +1,5 @@
 import type { Analysis } from "./analysis";
-import { analyze, findLabels, hasAdLikeAttributes, isRepeatedItem } from "./analysis";
+import { analyze, hasAdLikeAttributes, isRepeatedItem, labelOf } from "./analysis";
 import type { Measure } from "./measure";
 import { DEFAULT_THRESHOLD, type Signal, score } from "./score";
 
@@ -75,11 +75,12 @@ function expandThroughWrappers(el: Element): Element {
   return unit;
 }
 
+/** One unbounded pass over the whole root: a label deep in a large page must still be found. */
 function collectSeeds(root: Element, measure: Measure): Set<Element> {
   const seeds = new Set<Element>();
-  for (const { element } of findLabels(root, measure)) seeds.add(climbFromLabel(element));
   const all = [root, ...Array.from(root.querySelectorAll("*"))];
   for (const el of all) {
+    if (labelOf(el, measure)) seeds.add(climbFromLabel(el));
     if (el.localName === "iframe" || hasAdLikeAttributes(el)) {
       if (!isStructural(el)) seeds.add(expandThroughWrappers(el));
     }

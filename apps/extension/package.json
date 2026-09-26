@@ -4,14 +4,25 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "dev": "wxt",
-    "dev:firefox": "wxt -b firefox",
-    "build": "wxt build && wxt build -b firefox",
-    "zip": "wxt zip && wxt zip -b firefox",
+    "dev": "bun run rules && wxt",
+    "dev:firefox": "bun run rules && wxt -b firefox",
+    "build": "bun run rules && wxt build && wxt build -b firefox",
+    "zip": "bun run rules && wxt zip && wxt zip -b firefox",
     "postinstall": "wxt prepare",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "rules": "bun ../../packages/filter-engine/scripts/build-rules.ts"
   },
   "devDependencies": {
+    "@semantic-blocker/fixtures": "workspace:*",
     "wxt": "^0.21.4"
+  },
+  "dependencies": {
+    "@semantic-blocker/candidate-detector": "workspace:*",
+    "@semantic-blocker/classifier": "workspace:*",
+    "@semantic-blocker/decision-engine": "workspace:*",
+    "@semantic-blocker/feature-extractor": "workspace:*",
+    "@semantic-blocker/filter-engine": "workspace:*",
+    "@semantic-blocker/privacy": "workspace:*",
+    "@semantic-blocker/schemas": "workspace:*"
   }
 }

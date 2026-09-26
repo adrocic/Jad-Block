@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Semantic Blocker settings</title>
+    <link rel="stylesheet" href="../../src/ui/base.css" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Semantic Blocker</h1>
+      <p class="muted">Changes apply to pages you load after saving.</p>
+
+      <section>
+        <h2>Semantic detection</h2>
+        <label class="row">
+          <input id="semantic" type="checkbox" />
+          <span>Detect native ads and sponsored content that filter lists miss</span>
+        </label>
+        <fieldset>
+          <legend>When something is detected</legend>
+          <label class="row">
+            <input type="radio" name="mode" value="shadow" />
+            <span><strong>Record only (shadow mode).</strong> Nothing is hidden. Detections are logged
+              locally so accuracy can be measured.</span>
+          </label>
+          <label class="row">
+            <input type="radio" name="mode" value="enforce" />
+            <span><strong>Hide it.</strong> Every hidden item can be restored from the toolbar
+              popup.</span>
+          </label>
+        </fieldset>
+        <p class="note">
+          Semantic detection currently runs a local heuristic only. Nothing about the pages you
+          visit leaves your browser.
+        </p>
+      </section>
+
+      <section>
+        <h2>Disabled sites</h2>
+        <ul id="sites"></ul>
+        <p id="no-sites" class="muted">None. Use the toolbar popup to disable a site.</p>
+      </section>
+
+      <section>
+        <h2>Local data</h2>
+        <p><span id="log-count">0</span> semantic detections in the local shadow log.</p>
+        <div class="buttons">
+          <button id="export-log" type="button" class="primary">Export log (JSON)</button>
+          <button id="clear-log" type="button">Clear log</button>
+          <button id="clear-cache" type="button">Clear classification cache</button>
+        </div>
+        <p id="status" class="muted" role="status"></p>
+      </section>
+    </main>
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>

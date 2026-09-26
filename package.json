@@ -17,7 +17,9 @@
     "build": "bun run --filter '@semantic-blocker/extension' build",
     "dev:chrome": "bun run --filter '@semantic-blocker/extension' dev",
     "dev:firefox": "bun run --filter '@semantic-blocker/extension' dev:firefox",
-    "dev:api": "bun run --filter '@semantic-blocker/api' dev"
+    "dev:api": "bun run --filter '@semantic-blocker/api' dev",
+    "lists:update": "bun packages/filter-engine/scripts/update-lists.ts",
+    "e2e": "bun run --filter @semantic-blocker/e2e e2e"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.14",

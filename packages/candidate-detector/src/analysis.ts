@@ -156,21 +156,23 @@ export function isRepeatedItem(el: Element): boolean {
   return false;
 }
 
-/** Visible disclosure labels inside `el` (or on it via aria-label). */
+/** The disclosure label this single element shows (own leaf text or aria-label), if visible. */
+export function labelOf(node: Element, measure: Measure): LabelHint | null {
+  const aria = node.getAttribute("aria-label");
+  const hint =
+    (aria ? matchLabel(aria) : null) ??
+    (node.children.length === 0 ? matchLabel(node.textContent ?? "") : null);
+  // Hidden labels are ignored: invisible "Sponsored" text is a known way to fake a disclosure.
+  return hint && measure.isVisible(node) ? hint : null;
+}
+
+/** Visible disclosure labels on `el` or its first descendants (bounded for per-candidate use). */
 export function findLabels(el: Element, measure: Measure): { hint: LabelHint; element: Element }[] {
   const found: { hint: LabelHint; element: Element }[] = [];
-  const consider = (node: Element) => {
-    const aria = node.getAttribute("aria-label");
-    const hint =
-      (aria ? matchLabel(aria) : null) ??
-      (node.children.length === 0 ? matchLabel(node.textContent ?? "") : null);
-    // Hidden labels are ignored: invisible "Sponsored" text is a known way to fake a disclosure.
-    if (hint && measure.isVisible(node)) found.push({ hint, element: node });
-  };
-  consider(el);
-  const descendants = el.querySelectorAll("*");
-  for (let i = 0; i < descendants.length && i < MAX_SCANNED_DESCENDANTS; i++) {
-    consider(descendants[i] as Element);
+  const nodes = [el, ...Array.from(el.querySelectorAll("*")).slice(0, MAX_SCANNED_DESCENDANTS)];
+  for (const node of nodes) {
+    const hint = labelOf(node, measure);
+    if (hint) found.push({ hint, element: node });
   }
   return found;
 }

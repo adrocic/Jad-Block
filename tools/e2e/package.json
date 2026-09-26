@@ -1,0 +1,13 @@
+{
+  "name": "@semantic-blocker/e2e",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "e2e": "node --experimental-strip-types --no-warnings run.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.3.0",
+    "playwright": "^1.63.0"
+  }
+}

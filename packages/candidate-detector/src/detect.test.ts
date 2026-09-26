@@ -64,6 +64,18 @@ describe("signals", () => {
   });
 });
 
+test("finds labels anywhere in a large page, not just the first few hundred elements", () => {
+  const filler = "<div><p>Paragraph of filler text.</p></div>".repeat(2000);
+  document.body.innerHTML = `<main>${filler}
+    <div class="card" data-rect="300,250"><span>Sponsored</span><a href="https://x.example/">Go</a></div>
+  </main>`;
+  const candidates = findCandidates(document.body, {
+    pageUrl: "https://site.example/",
+    measure: fixtureMeasure,
+  });
+  expect(candidates.map((c) => c.element.className)).toEqual(["card"]);
+});
+
 test("scans inside open shadow roots", () => {
   document.body.innerHTML = '<div id="host"></div>';
   const host = document.getElementById("host");

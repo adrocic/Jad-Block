@@ -12,3 +12,5 @@ dist/
 coverage/
 # Private labeled corpus never lives in this repo
 datasets/
+# Generated from packages/filter-engine/lists at build time
+apps/extension/public/generated/

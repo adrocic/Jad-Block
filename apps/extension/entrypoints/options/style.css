@@ -1,0 +1,59 @@
+main {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 24px 16px;
+  display: grid;
+  gap: 24px;
+}
+
+h1 {
+  font-size: 20px;
+}
+
+section {
+  display: grid;
+  gap: 10px;
+}
+
+fieldset {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: grid;
+  gap: 8px;
+}
+
+legend {
+  padding: 0 4px;
+  color: var(--muted);
+}
+
+.row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.row input {
+  margin-top: 3px;
+}
+
+#sites {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#sites li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-top: 1px solid var(--line);
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
