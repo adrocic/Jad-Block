@@ -1,0 +1,27 @@
+{
+  "name": "semantic-blocker",
+  "private": true,
+  "license": "GPL-3.0-only",
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "tools/*"
+  ],
+  "scripts": {
+    "check": "biome check . && bun run typecheck",
+    "fix": "biome check --write .",
+    "typecheck": "bun run --filter '*' typecheck",
+    "test": "bun test",
+    "build": "bun run --filter '@semantic-blocker/extension' build",
+    "dev:chrome": "bun run --filter '@semantic-blocker/extension' dev",
+    "dev:firefox": "bun run --filter '@semantic-blocker/extension' dev:firefox",
+    "dev:api": "bun run --filter '@semantic-blocker/api' dev"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.5.14",
+    "@happy-dom/global-registrator": "^20.14.5",
+    "bun-types": "^1.4.2",
+    "typescript": "^7.0.2"
+  }
+}

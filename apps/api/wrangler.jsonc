@@ -1,0 +1,10 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "semantic-blocker-api",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": { "enabled": true }
+  // M3: add KV (fingerprint cache + kill switch) and the rate-limiting binding.
+  // Secrets (TYPESAFE_API_KEY) go in .dev.vars locally and `wrangler secret put` in prod.
+}

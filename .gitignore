@@ -1,0 +1,14 @@
+node_modules/
+.output/
+.wxt/
+.wrangler/
+dist/
+*.log
+.env
+.env.*
+.dev.vars
+*.pem
+.DS_Store
+coverage/
+# Private labeled corpus never lives in this repo
+datasets/
