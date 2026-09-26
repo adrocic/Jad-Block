@@ -3,7 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "e2e": "node --experimental-strip-types --no-warnings run.ts",
+    "build:ext": "cd ../../apps/extension && bun run rules && WXT_API_URL=http://api.test:8787 bunx wxt build",
+    "e2e": "bun run build:ext && node --experimental-strip-types --no-warnings run.ts",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {

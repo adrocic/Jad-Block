@@ -17,36 +17,41 @@ interface StoredEntry {
 export interface CacheHit {
   classification: Classification;
   modelVersion: string;
-  userOverride: boolean;
 }
 
 const packaged = knownFingerprints as Record<string, Classification>;
 const PACKAGED_VERSION = "packaged";
+// Overrides are stored separately from classifications and never expire, so clearing or
+// expiring the cache can't bring back something the user said was wrongly hidden.
 const OVERRIDE_PREFIX = "override:";
 
 /**
- * Looks fingerprints up in L3 then L2. Stored entries from a different model version are ignored,
- * so switching classifiers (e.g. heuristic to Jev) doesn't serve stale evidence.
+ * Looks fingerprints up in L3 then L2. `accept` filters stored entries by the model that produced
+ * them, e.g. skipping local-heuristic results once remote classification is on so they upgrade.
  */
 export async function lookup(
   fingerprints: readonly string[],
-  modelVersion: string,
+  accept: (modelVersion: string) => boolean,
   now = Date.now(),
 ): Promise<Map<string, CacheHit>> {
-  const keys = fingerprints.flatMap((fp) => [PREFIX + fp, OVERRIDE_PREFIX + fp]);
-  const stored = await browser.storage.local.get(keys);
+  const stored = await browser.storage.local.get(fingerprints.map((fp) => PREFIX + fp));
   const hits = new Map<string, CacheHit>();
   for (const fp of fingerprints) {
-    const userOverride = stored[OVERRIDE_PREFIX + fp] === true;
     const known = packaged[fp];
     const entry = stored[PREFIX + fp] as StoredEntry | undefined;
     if (known) {
-      hits.set(fp, { classification: known, modelVersion: PACKAGED_VERSION, userOverride });
-    } else if (entry && entry.modelVersion === modelVersion && now - entry.storedAt < TTL_MS) {
-      hits.set(fp, { ...entry, userOverride });
+      hits.set(fp, { classification: known, modelVersion: PACKAGED_VERSION });
+    } else if (entry && accept(entry.modelVersion) && now - entry.storedAt < TTL_MS) {
+      hits.set(fp, { classification: entry.classification, modelVersion: entry.modelVersion });
     }
   }
   return hits;
+}
+
+/** Fingerprints the user marked as "not an ad" after restoring them. */
+export async function readOverrides(fingerprints: readonly string[]): Promise<Set<string>> {
+  const stored = await browser.storage.local.get(fingerprints.map((fp) => OVERRIDE_PREFIX + fp));
+  return new Set(fingerprints.filter((fp) => stored[OVERRIDE_PREFIX + fp] === true));
 }
 
 export async function store(

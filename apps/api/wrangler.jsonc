@@ -4,7 +4,15 @@
   "main": "src/index.ts",
   "compatibility_date": "2026-09-01",
   "compatibility_flags": ["nodejs_compat"],
-  "observability": { "enabled": true }
-  // M3: add KV (fingerprint cache + kill switch) and the rate-limiting binding.
-  // Secrets (TYPESAFE_API_KEY) go in .dev.vars locally and `wrangler secret put` in prod.
+  "observability": { "enabled": true },
+  "vars": { "CLASSIFIER": "heuristic" },
+  // Wrangler provisions the namespace on first deploy and simulates it locally in `wrangler dev`.
+  "kv_namespaces": [{ "binding": "CACHE" }],
+  "ratelimits": [
+    // Per install: a busy page sends a few requests, so 60/min leaves plenty of headroom.
+    { "name": "CLIENT_LIMITER", "namespace_id": "1001", "simple": { "limit": 60, "period": 60 } },
+    // Whole service: stays under Jev's 1,200 requests/minute account limit.
+    { "name": "GLOBAL_LIMITER", "namespace_id": "1002", "simple": { "limit": 1000, "period": 60 } }
+  ]
+  // Secrets: TYPESAFE_API_KEY goes in .dev.vars locally and `wrangler secret put` in production.
 }

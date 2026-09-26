@@ -30,9 +30,33 @@
               popup.</span>
           </label>
         </fieldset>
-        <p class="note">
-          Semantic detection currently runs a local heuristic only. Nothing about the pages you
-          visit leaves your browser.
+      </section>
+
+      <section>
+        <h2>AI classification</h2>
+        <label class="row">
+          <input id="remote" type="checkbox" />
+          <span><strong>Use AI to classify ambiguous elements</strong> (more accurate). Off by
+            default.</span>
+        </label>
+        <details>
+          <summary>What is sent, and what never is</summary>
+          <p>
+            Only for page elements that already look like ads, a short structural summary goes to
+            the Semantic Blocker service. That's the element's position and size category, what
+            kind of links it has, whether it shows a disclosure label like "Sponsored", and up to
+            280 characters of its visible text with emails, card numbers, phone numbers and links
+            removed.
+          </p>
+          <p>
+            Never sent: page addresses, HTML, form fields or anything you type, cookies, or
+            anything from banking, email, health, password-manager or local-network sites. The
+            service returns probabilities only. The extension itself decides what to hide.
+          </p>
+        </details>
+        <p id="remote-status" class="note">
+          Off: semantic detection runs a local heuristic only, and nothing about the pages you visit
+          leaves your browser.
         </p>
       </section>
 

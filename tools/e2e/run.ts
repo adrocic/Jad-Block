@@ -1,9 +1,11 @@
 // End-to-end smoke test: loads the built Chrome extension into Playwright's Chromium and checks
-// DNR blocking, cosmetic hiding, semantic shadow/enforce behavior, and per-site disabling.
-// Every hostname resolves to a local Bun server, so no request reaches the real internet.
-// Run: bun run build && bun run e2e
+// DNR blocking, cosmetic hiding, semantic shadow/enforce behavior, opt-in remote classification
+// against a local `wrangler dev` Worker, and per-site disabling. Every hostname resolves to
+// 127.0.0.1, so no request reaches the real internet.
+// Run: bun run e2e (builds the Chrome extension with WXT_API_URL=http://api.test:8787 first)
 // Runs on Node (type stripping), not Bun: Playwright's browser launch hangs under Bun on Windows.
 import { strict as assert } from "node:assert";
+import { type ChildProcess, execSync, spawn } from "node:child_process";
 import { createServer } from "node:http";
 import type { AddressInfo } from "node:net";
 import { dirname, join } from "node:path";
@@ -68,11 +70,45 @@ async function loadPage(page: Page, url: string) {
 const isHidden = (page: Page, selector: string) =>
   page.$eval(selector, (el) => getComputedStyle(el).display === "none");
 
+const API_PORT = 8787;
+
+/** Starts the classification Worker locally (workerd via wrangler) and waits until healthy. */
+async function startApi(): Promise<ChildProcess> {
+  const api = spawn("bunx", ["wrangler", "dev", "--port", String(API_PORT), "--ip", "127.0.0.1"], {
+    cwd: join(here, "..", "..", "apps", "api"),
+    shell: process.platform === "win32",
+    stdio: "ignore",
+  });
+  await until(
+    "local API",
+    async () => {
+      const res = await fetch(`http://127.0.0.1:${API_PORT}/health`).catch(() => null);
+      return res?.ok;
+    },
+    60_000,
+  );
+  return api;
+}
+
+function stopApi(api: ChildProcess | undefined): void {
+  if (!api?.pid) return;
+  // wrangler spawns workerd; on Windows only taskkill /T takes down the whole tree.
+  if (process.platform === "win32") execSync(`taskkill /pid ${api.pid} /T /F`, { stdio: "ignore" });
+  else api.kill("SIGTERM");
+}
+
+type LogEntry = { state: string; modelVersion: string };
+const readShadowLog = async (sw: Worker) =>
+  ((await sw.evaluate(() => chrome.storage.local.get("shadowLog"))).shadowLog ?? []) as LogEntry[];
+
 let context: BrowserContext | undefined;
+let api: ChildProcess | undefined;
 const results: string[] = [];
 const pass = (name: string) => results.push(`  ✔ ${name}`);
 
 try {
+  api = await startApi();
+
   context = await chromium.launchPersistentContext("", {
     channel: "chromium",
     headless: true,
@@ -112,18 +148,29 @@ try {
   pass("generic cosmetic rule hides .ad-slot");
 
   const log = await until("shadow log entry", async () => {
-    const { shadowLog } = await sw.evaluate(() => chrome.storage.local.get("shadowLog"));
-    return (shadowLog as { state: string; host: string }[] | undefined)?.length ? shadowLog : false;
+    const entries = await readShadowLog(sw);
+    return entries.length > 0 ? entries : false;
   });
-  assert.equal((log as { state: string }[])[0]?.state, "would-hide");
+  assert.equal(log[0]?.state, "would-hide");
+  assert.equal(log[0]?.modelVersion, "heuristic-1", "remote must be off by default");
   assert.equal(await isHidden(page, "#semantic-target"), false);
-  pass("shadow mode logs the native ad as would-hide without hiding it");
+  pass("shadow mode logs the native ad as would-hide, classified locally by default");
 
   await storageSet(sw, { mode: "enforce" });
   await loadPage(page, url);
   assert.ok(await isHidden(page, "#semantic-target"));
   assert.ok(await page.$("#semantic-target[data-sb-hidden]"));
   pass("enforce mode hides the native ad reversibly (data-sb-hidden)");
+
+  await storageSet(sw, { remoteClassification: true, shadowLog: [] });
+  await loadPage(page, url);
+  const remoteLog = await until("remote classification", async () => {
+    const entries = await readShadowLog(sw);
+    return entries.some((e) => e.modelVersion === "api-heuristic-1") ? entries : false;
+  });
+  assert.ok(remoteLog.length > 0);
+  assert.ok(await isHidden(page, "#semantic-target"));
+  pass("opted in: the native ad is classified by the Worker API (api-heuristic-1)");
 
   await storageSet(sw, { disabledSites: ["shop.example"] });
   await until("site allow rule", async () => {
@@ -147,4 +194,5 @@ try {
 } finally {
   await context?.close();
   server.close();
+  stopApi(api);
 }

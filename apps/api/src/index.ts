@@ -1,11 +1,16 @@
 import { Hono } from "hono";
+import type { Env } from "./env";
+import { classify } from "./routes/classify";
 
-export const app = new Hono();
+export const app = new Hono<{ Bindings: Env }>();
 
 app.get("/health", (c) => c.json({ ok: true }));
+app.post("/v1/classify", classify);
 
-// M3: POST /v1/classify — validate with @semantic-blocker/schemas, rate-limit,
-// check the KV fingerprint cache, then call the SemanticClassifier.
-// Responses carry probabilities and modelVersion only: never selectors or code.
+app.notFound((c) => c.json({ error: "not found" }, 404));
+app.onError((error, c) => {
+  console.error(JSON.stringify({ event: "unhandled_error", message: String(error) }));
+  return c.json({ error: "internal error" }, 500);
+});
 
 export default app;

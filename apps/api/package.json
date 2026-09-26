@@ -9,10 +9,13 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@semantic-blocker/classifier": "workspace:*",
+    "@semantic-blocker/schemas": "workspace:*",
     "hono": "^4.13.9"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20260925.2",
+    "@semantic-blocker/fixtures": "workspace:*",
     "wrangler": "^4.141.0"
   }
 }
