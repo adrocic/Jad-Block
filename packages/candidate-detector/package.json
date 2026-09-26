@@ -1,0 +1,19 @@
+{
+  "name": "@semantic-blocker/candidate-detector",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./testing": "./src/testing.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@semantic-blocker/fingerprints": "workspace:*",
+    "@semantic-blocker/schemas": "workspace:*"
+  },
+  "devDependencies": {
+    "@semantic-blocker/fixtures": "workspace:*"
+  }
+}

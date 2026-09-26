@@ -23,8 +23,68 @@
     },
     "apps/extension": {
       "name": "@semantic-blocker/extension",
+      "version": "0.1.0",
       "devDependencies": {
         "wxt": "^0.21.4",
+      },
+    },
+    "fixtures": {
+      "name": "@semantic-blocker/fixtures",
+      "devDependencies": {
+        "@semantic-blocker/candidate-detector": "workspace:*",
+        "@semantic-blocker/classifier": "workspace:*",
+        "@semantic-blocker/decision-engine": "workspace:*",
+        "@semantic-blocker/feature-extractor": "workspace:*",
+        "@semantic-blocker/privacy": "workspace:*",
+      },
+    },
+    "packages/candidate-detector": {
+      "name": "@semantic-blocker/candidate-detector",
+      "dependencies": {
+        "@semantic-blocker/fingerprints": "workspace:*",
+        "@semantic-blocker/schemas": "workspace:*",
+      },
+      "devDependencies": {
+        "@semantic-blocker/fixtures": "workspace:*",
+      },
+    },
+    "packages/classifier": {
+      "name": "@semantic-blocker/classifier",
+      "dependencies": {
+        "@semantic-blocker/schemas": "workspace:*",
+      },
+    },
+    "packages/decision-engine": {
+      "name": "@semantic-blocker/decision-engine",
+      "dependencies": {
+        "@semantic-blocker/schemas": "workspace:*",
+      },
+    },
+    "packages/feature-extractor": {
+      "name": "@semantic-blocker/feature-extractor",
+      "dependencies": {
+        "@semantic-blocker/candidate-detector": "workspace:*",
+        "@semantic-blocker/fingerprints": "workspace:*",
+        "@semantic-blocker/schemas": "workspace:*",
+      },
+      "devDependencies": {
+        "@semantic-blocker/fixtures": "workspace:*",
+        "@semantic-blocker/privacy": "workspace:*",
+      },
+    },
+    "packages/fingerprints": {
+      "name": "@semantic-blocker/fingerprints",
+    },
+    "packages/privacy": {
+      "name": "@semantic-blocker/privacy",
+      "dependencies": {
+        "@semantic-blocker/schemas": "workspace:*",
+      },
+    },
+    "packages/schemas": {
+      "name": "@semantic-blocker/schemas",
+      "dependencies": {
+        "zod": "^4.6.5",
       },
     },
   },
@@ -241,7 +301,23 @@
 
     "@semantic-blocker/api": ["@semantic-blocker/api@workspace:apps/api"],
 
+    "@semantic-blocker/candidate-detector": ["@semantic-blocker/candidate-detector@workspace:packages/candidate-detector"],
+
+    "@semantic-blocker/classifier": ["@semantic-blocker/classifier@workspace:packages/classifier"],
+
+    "@semantic-blocker/decision-engine": ["@semantic-blocker/decision-engine@workspace:packages/decision-engine"],
+
     "@semantic-blocker/extension": ["@semantic-blocker/extension@workspace:apps/extension"],
+
+    "@semantic-blocker/feature-extractor": ["@semantic-blocker/feature-extractor@workspace:packages/feature-extractor"],
+
+    "@semantic-blocker/fingerprints": ["@semantic-blocker/fingerprints@workspace:packages/fingerprints"],
+
+    "@semantic-blocker/fixtures": ["@semantic-blocker/fixtures@workspace:fixtures"],
+
+    "@semantic-blocker/privacy": ["@semantic-blocker/privacy@workspace:packages/privacy"],
+
+    "@semantic-blocker/schemas": ["@semantic-blocker/schemas@workspace:packages/schemas"],
 
     "@sindresorhus/is": ["@sindresorhus/is@7.2.0", "", {}, "sha512-P1Cz1dWaFfR4IR+U13mqqiGsLFf1KbayybWwdd2vfctdV6hDpUkgCY0nKOLLTMSoRd/jJNjtbqzf13K8DCCXQw=="],
 
@@ -574,6 +650,8 @@
     "youch": ["youch@4.1.0-beta.10", "", { "dependencies": { "@poppinss/colors": "^4.1.5", "@poppinss/dumper": "^0.6.4", "@speed-highlight/core": "^1.2.7", "cookie": "^1.0.2", "youch-core": "^0.3.3" } }, "sha512-rLfVLB4FgQneDr0dv1oddCVZmKjcJ6yX6mS4pU82Mq/Dt9a3cLZQ62pDBL4AUO+uVrCvtWz3ZFUL2HFAFJ/BXQ=="],
 
     "youch-core": ["youch-core@0.3.3", "", { "dependencies": { "@poppinss/exception": "^1.2.2", "error-stack-parser-es": "^1.0.5" } }, "sha512-ho7XuGjLaJ2hWHoK8yFnsUGy2Y5uDpqSTq1FkHLK4/oqKtyUU1AFbOOxY4IpC9f0fTLjwYbslUz0Po5BpD1wrA=="],
+
+    "zod": ["zod@4.6.5", "", {}, "sha512-v5l/aFXZQeai4awLbOpSoHecE9UiMrnfx75tEXLjNonXVARxQ5mOeipTjROUchszUNCqnE+hqAMujRsRHsut2Q=="],
 
     "@aklinker1/rollup-plugin-visualizer/picomatch": ["picomatch@2.3.2", "", {}, "sha512-V7+vQEJ06Z+c5tSye8S+nHUfI51xoXIXjHQ99cQtKUkQqqO1kO/KCJUfZXuB47h/YBlDhah2H3hdUGXn8ie0oA=="],
 

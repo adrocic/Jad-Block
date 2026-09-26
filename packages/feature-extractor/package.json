@@ -1,0 +1,20 @@
+{
+  "name": "@semantic-blocker/feature-extractor",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@semantic-blocker/candidate-detector": "workspace:*",
+    "@semantic-blocker/fingerprints": "workspace:*",
+    "@semantic-blocker/schemas": "workspace:*"
+  },
+  "devDependencies": {
+    "@semantic-blocker/fixtures": "workspace:*",
+    "@semantic-blocker/privacy": "workspace:*"
+  }
+}

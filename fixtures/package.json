@@ -1,0 +1,18 @@
+{
+  "name": "@semantic-blocker/fixtures",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@semantic-blocker/candidate-detector": "workspace:*",
+    "@semantic-blocker/classifier": "workspace:*",
+    "@semantic-blocker/decision-engine": "workspace:*",
+    "@semantic-blocker/feature-extractor": "workspace:*",
+    "@semantic-blocker/privacy": "workspace:*"
+  }
+}
