@@ -33,5 +33,19 @@ bun run check && bun test
 See [AGENTS.md](AGENTS.md) for project rules and [docs/architecture.md](docs/architecture.md) for
 the design.
 
+## Roadmap
+Planned work to close the gap with uBlock Origin, in priority order:
+
+- [ ] **More filter lists.** Ship uBlock filters (Ads, Privacy, Badware, Quick fixes, Unbreak),
+      Peter Lowe's list and URLhaus alongside EasyList and EasyPrivacy. Much of the per-site
+      breakage fixing lives in these lists. Watch Chrome's static rule limits (30k guaranteed per
+      extension, the rest from a shared global pool).
+- [ ] **Scriptlet support.** Inject a bundled, vetted set of scriptlets (no remote code, per MV3) to
+      handle YouTube video ads, anti-adblock walls and other ads that network and CSS rules can't
+      reach.
+- [ ] **List updates without a rebuild.** Filter lists are snapshots baked in at build time. Add a
+      way to refresh them between releases, for example by shipping updated rules as data through
+      dynamic DNR rules and stored cosmetic rules.
+
 ## License
 [GPL-3.0](LICENSE)
