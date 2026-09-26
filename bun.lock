@@ -114,6 +114,18 @@
         "playwright": "^1.63.0",
       },
     },
+    "tools/eval": {
+      "name": "@semantic-blocker/eval",
+      "dependencies": {
+        "@semantic-blocker/candidate-detector": "workspace:*",
+        "@semantic-blocker/classifier": "workspace:*",
+        "@semantic-blocker/decision-engine": "workspace:*",
+        "@semantic-blocker/feature-extractor": "workspace:*",
+        "@semantic-blocker/fixtures": "workspace:*",
+        "@semantic-blocker/privacy": "workspace:*",
+        "@semantic-blocker/schemas": "workspace:*",
+      },
+    },
   },
   "packages": {
     "@1natsu/wait-element": ["@1natsu/wait-element@4.2.0", "", { "dependencies": { "defu": "^6.1.4", "many-keys-map": "^3.0.0" } }, "sha512-Om0Q+WE9mNrpY4AwMTvkFiYHv8VM7TML3PvOqXy+w6kAjLjKhGYHYX+305+a6J8RVpds9s7IF2Z5aOPYwULFNw=="],
@@ -347,6 +359,8 @@
     "@semantic-blocker/decision-engine": ["@semantic-blocker/decision-engine@workspace:packages/decision-engine"],
 
     "@semantic-blocker/e2e": ["@semantic-blocker/e2e@workspace:tools/e2e"],
+
+    "@semantic-blocker/eval": ["@semantic-blocker/eval@workspace:tools/eval"],
 
     "@semantic-blocker/extension": ["@semantic-blocker/extension@workspace:apps/extension"],
 

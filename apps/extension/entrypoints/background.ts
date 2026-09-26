@@ -2,7 +2,7 @@ import { browser } from "wxt/browser";
 import { setUserOverride } from "@/src/background/cache";
 import { classifyCandidates } from "@/src/background/classify";
 import { injectPageCss, syncGenericCosmetics } from "@/src/background/cosmetic";
-import { appendToLog } from "@/src/background/log";
+import { logDetections, logLabel, logRestores } from "@/src/background/log";
 import { syncSiteAllowRules } from "@/src/background/sites";
 import type { BackgroundMessage, PageInitResponse } from "@/src/messages";
 import { disabledSitesSetting, isHostDisabled, modeSetting, semanticSetting } from "@/src/settings";
@@ -34,9 +34,13 @@ async function handle(
     case "classify":
       return classifyCandidates(message.candidates, message.sensitive);
     case "report":
-      return appendToLog(message.host, message.entries);
-    case "feedback":
-      return setUserOverride(message.fingerprint, message.wronglyHidden);
+      return logDetections(message.host, message.entries);
+    case "restored":
+      return logRestores(message.host, message.fingerprints);
+    case "label":
+      // "Not an ad" also becomes a permanent override: that layout is never hidden again.
+      await setUserOverride(message.fingerprint, !message.isAd);
+      return logLabel(message.host, message.fingerprint, message.isAd, message.source);
   }
 }
 

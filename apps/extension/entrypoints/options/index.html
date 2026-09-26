@@ -68,7 +68,11 @@
 
       <section>
         <h2>Local data</h2>
-        <p><span id="log-count">0</span> semantic detections in the local shadow log.</p>
+        <p id="log-count">The local log is empty.</p>
+        <p class="muted">
+          In shadow mode, answering “Is this an ad?” in the toolbar popup labels detections. Export
+          the log and run <code>bun run eval -- --log &lt;file&gt;</code> to measure accuracy.
+        </p>
         <div class="buttons">
           <button id="export-log" type="button" class="primary">Export log (JSON)</button>
           <button id="clear-log" type="button">Clear log</button>

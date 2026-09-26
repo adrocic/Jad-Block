@@ -6,6 +6,7 @@
 // Runs on Node (type stripping), not Bun: Playwright's browser launch hangs under Bun on Windows.
 import { strict as assert } from "node:assert";
 import { type ChildProcess, execSync, spawn } from "node:child_process";
+import { rmSync, writeFileSync } from "node:fs";
 import { createServer } from "node:http";
 import type { AddressInfo } from "node:net";
 import { dirname, join } from "node:path";
@@ -97,7 +98,7 @@ function stopApi(api: ChildProcess | undefined): void {
   else api.kill("SIGTERM");
 }
 
-type LogEntry = { state: string; modelVersion: string };
+type LogEntry = { state: string; modelVersion: string; fingerprint: string };
 const readShadowLog = async (sw: Worker) =>
   ((await sw.evaluate(() => chrome.storage.local.get("shadowLog"))).shadowLog ?? []) as LogEntry[];
 
@@ -171,6 +172,38 @@ try {
   assert.ok(remoteLog.length > 0);
   assert.ok(await isHidden(page, "#semantic-target"));
   pass("opted in: the native ad is classified by the Worker API (api-heuristic-1)");
+
+  // The popup's labeling path: an extension page sends "label"; the background logs it and turns
+  // "not an ad" into a permanent override. (The popup itself can't be driven: it reads the active
+  // tab, which would be the popup.)
+  const fingerprint = remoteLog.find((e) => e.modelVersion === "api-heuristic-1")?.fingerprint;
+  const extensionPage = await context.newPage();
+  await extensionPage.goto(`chrome-extension://${new URL(sw.url()).host}/options.html`);
+  await extensionPage.evaluate(
+    (fp) =>
+      chrome.runtime.sendMessage({
+        type: "label",
+        host: "shop.example",
+        fingerprint: fp,
+        isAd: false,
+        source: "popup",
+      }),
+    fingerprint,
+  );
+  await extensionPage.close();
+  await loadPage(page, url);
+  assert.equal(await isHidden(page, "#semantic-target"), false, "override should prevent hiding");
+  pass("labeling 'not an ad' is logged and stops that element from being hidden");
+
+  // Export the log exactly as the options page would, then evaluate it with tools/eval.
+  const exportPath = join(here, "shadow-log.e2e.tmp.json");
+  writeFileSync(exportPath, JSON.stringify(await readShadowLog(sw)));
+  const report = execSync(`bun src/cli.ts --log "${exportPath}"`, {
+    cwd: join(here, "..", "eval"),
+  }).toString();
+  rmSync(exportPath);
+  assert.match(report, /Labeled elements: 1/);
+  pass("the exported log evaluates with tools/eval (1 labeled element)");
 
   await storageSet(sw, { disabledSites: ["shop.example"] });
   await until("site allow rule", async () => {

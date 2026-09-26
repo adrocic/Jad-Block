@@ -6,3 +6,4 @@ z.config({ jitless: true });
 
 export * from "./classify";
 export * from "./features";
+export * from "./log";

@@ -33,7 +33,15 @@ export type BackgroundMessage =
   | { type: "page-init"; url: string }
   | { type: "classify"; candidates: CandidateFeatures[]; sensitive: boolean }
   | { type: "report"; host: string; entries: SemanticEntry[] }
-  | { type: "feedback"; fingerprint: string; wronglyHidden: boolean };
+  | { type: "restored"; host: string; fingerprints: string[] }
+  /** "Is this an ad?" answered in the popup, either for a shadow-mode item or after a restore. */
+  | {
+      type: "label";
+      host: string;
+      fingerprint: string;
+      isAd: boolean;
+      source: "popup" | "restore-feedback";
+    };
 
 export type ContentMessage =
   | { type: "list-semantic" }

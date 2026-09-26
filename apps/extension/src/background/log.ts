@@ -1,31 +1,48 @@
+import type { LogEvent } from "@semantic-blocker/schemas";
 import { browser } from "wxt/browser";
 import type { SemanticEntry } from "../messages";
 
 /**
- * Local-only record of semantic detections, used to measure precision before enabling hiding
- * (tools/eval). It never leaves the browser unless the user exports it from the options page.
+ * Local-only event log: semantic detections plus the user's labels and restores. tools/eval turns
+ * an export of it into precision and restore-rate reports. It never leaves the browser unless the
+ * user exports it from the options page. Schema: packages/schemas/src/log.ts.
  */
-export interface ShadowLogEntry extends Omit<SemanticEntry, "id"> {
-  at: number;
-  host: string;
-}
-
 const KEY = "shadowLog";
 export const MAX_LOG_ENTRIES = 2000;
 
-export async function appendToLog(host: string, entries: readonly SemanticEntry[]): Promise<void> {
+async function append(events: readonly LogEvent[]): Promise<void> {
+  if (events.length === 0) return;
   const { [KEY]: existing = [] } = (await browser.storage.local.get(KEY)) as {
-    [KEY]?: ShadowLogEntry[];
+    [KEY]?: LogEvent[];
   };
-  const at = Date.now();
-  const added = entries.map(({ id: _id, ...entry }) => ({ ...entry, at, host }));
-  await browser.storage.local.set({ [KEY]: [...existing, ...added].slice(-MAX_LOG_ENTRIES) });
+  await browser.storage.local.set({ [KEY]: [...existing, ...events].slice(-MAX_LOG_ENTRIES) });
 }
 
-export async function readLog(): Promise<ShadowLogEntry[]> {
-  const { [KEY]: log = [] } = (await browser.storage.local.get(KEY)) as {
-    [KEY]?: ShadowLogEntry[];
-  };
+export function logDetections(host: string, entries: readonly SemanticEntry[]): Promise<void> {
+  const at = Date.now();
+  return append(
+    entries.map(({ id: _id, ...entry }) => ({ ...entry, kind: "detection" as const, at, host })),
+  );
+}
+
+export function logLabel(
+  host: string,
+  fingerprint: string,
+  isAd: boolean,
+  source: "popup" | "restore-feedback",
+): Promise<void> {
+  return append([{ kind: "label", at: Date.now(), host, fingerprint, isAd, source }]);
+}
+
+export function logRestores(host: string, fingerprints: readonly string[]): Promise<void> {
+  const at = Date.now();
+  return append(
+    fingerprints.map((fingerprint) => ({ kind: "restore" as const, at, host, fingerprint })),
+  );
+}
+
+export async function readLog(): Promise<LogEvent[]> {
+  const { [KEY]: log = [] } = (await browser.storage.local.get(KEY)) as { [KEY]?: LogEvent[] };
   return log;
 }
 

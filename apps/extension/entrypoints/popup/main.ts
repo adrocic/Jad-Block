@@ -27,7 +27,10 @@ function sendToTab<T>(tabId: number, message: ContentMessage): Promise<T | undef
   >;
 }
 
-function renderEntry(tabId: number, entry: SemanticEntry, refresh: () => void): HTMLElement {
+/** Fingerprints answered while this popup is open, so re-renders don't ask again. */
+const answered = new Set<string>();
+
+function renderEntry(host: string, tabId: number, entry: SemanticEntry): HTMLElement {
   const template = $<HTMLTemplateElement>("entry-template");
   const li = template.content.firstElementChild?.cloneNode(true) as HTMLElement;
   const q = <T extends HTMLElement>(selector: string) => li.querySelector(selector) as T;
@@ -38,24 +41,42 @@ function renderEntry(tabId: number, entry: SemanticEntry, refresh: () => void): 
   q(".entry-text").textContent = entry.features.untrustedText;
 
   const restore = q<HTMLButtonElement>(".restore");
-  const feedback = q(".feedback");
-  restore.hidden = entry.state !== "hidden";
-  restore.addEventListener("click", async () => {
-    await sendToTab(tabId, { type: "restore", id: entry.id });
-    restore.hidden = true;
-    feedback.hidden = false;
-  });
-  const answer = (wronglyHidden: boolean) => async () => {
-    const message: BackgroundMessage = {
-      type: "feedback",
-      fingerprint: entry.fingerprint,
-      wronglyHidden,
+  const question = q(".question");
+  const thanks = q(".thanks");
+  const ask = (text: string, source: "popup" | "restore-feedback", yesMeansAd: boolean) => {
+    q(".question-text").textContent = text;
+    question.hidden = false;
+    const answer = (yes: boolean) => async () => {
+      // Labels stay in the local log and feed tools/eval. "Not an ad" also stops future hiding.
+      const message: BackgroundMessage = {
+        type: "label",
+        host,
+        fingerprint: entry.fingerprint,
+        isAd: yes === yesMeansAd,
+        source,
+      };
+      await browser.runtime.sendMessage(message);
+      answered.add(entry.fingerprint);
+      question.hidden = true;
+      thanks.hidden = false;
     };
-    await browser.runtime.sendMessage(message);
-    refresh();
+    q(".answer-yes").addEventListener("click", answer(true));
+    q(".answer-no").addEventListener("click", answer(false));
   };
-  q(".feedback-yes").addEventListener("click", answer(true));
-  q(".feedback-no").addEventListener("click", answer(false));
+
+  if (answered.has(entry.fingerprint)) {
+    thanks.hidden = false;
+  } else if (entry.state === "would-hide") {
+    ask("Is this an ad?", "popup", true);
+  } else if (entry.state === "hidden") {
+    restore.hidden = false;
+    restore.addEventListener("click", async () => {
+      await sendToTab(tabId, { type: "restore", id: entry.id });
+      restore.hidden = true;
+      q(".entry-state").textContent = STATE_LABELS.restored;
+      ask("Wrongly hidden?", "restore-feedback", false);
+    });
+  }
   return li;
 }
 
@@ -98,7 +119,7 @@ async function render(): Promise<void> {
   $("shadow-note").hidden = mode !== "shadow";
 
   const list = $("entries");
-  list.replaceChildren(...flagged.map((entry) => renderEntry(tabId, entry, render)));
+  list.replaceChildren(...flagged.map((entry) => renderEntry(host, tabId, entry)));
 
   const restoreAll = $<HTMLButtonElement>("restore-all");
   restoreAll.hidden = hidden === 0;

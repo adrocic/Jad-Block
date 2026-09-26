@@ -14,6 +14,8 @@ export interface PipelineOptions {
   sensitive: boolean;
   classify(candidates: CandidateFeatures[], sensitive: boolean): Promise<ClassifyResult[]>;
   report(entries: SemanticEntry[]): void;
+  /** Called with the fingerprints the user restored (for the local restore-rate metric). */
+  onRestore?(fingerprints: string[]): void;
 }
 
 function userOverrideDecision(policyVersion: string): Decision {
@@ -107,13 +109,18 @@ export class SemanticPipeline {
     const entry = this.entries.get(id);
     if (!entry || !this.hider.restore(id)) return false;
     entry.state = "restored";
+    this.options.onRestore?.([entry.fingerprint]);
     return true;
   }
 
   restoreAll(): void {
+    const fingerprints: string[] = [];
     for (const id of this.hider.restoreAll()) {
       const entry = this.entries.get(id);
-      if (entry) entry.state = "restored";
+      if (!entry) continue;
+      entry.state = "restored";
+      fingerprints.push(entry.fingerprint);
     }
+    if (fingerprints.length > 0) this.options.onRestore?.(fingerprints);
   }
 }

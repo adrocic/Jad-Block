@@ -14,6 +14,7 @@ function setup(mode: Mode, options: { failing?: boolean; override?: boolean } = 
   const classifier = new HeuristicClassifier();
   const calls: CandidateFeatures[][] = [];
   const reported: SemanticEntry[] = [];
+  const restored: string[][] = [];
   const pipeline = new SemanticPipeline({
     pageUrl: fixture.pageUrl,
     measure: fixtureMeasure,
@@ -31,8 +32,9 @@ function setup(mode: Mode, options: { failing?: boolean; override?: boolean } = 
       })) as ClassifyResult[];
     },
     report: (entries) => reported.push(...entries),
+    onRestore: (fingerprints) => restored.push(fingerprints),
   });
-  return { fixture, pipeline, calls, reported };
+  return { fixture, pipeline, calls, reported, restored };
 }
 
 const hiddenElements = () => Array.from(document.querySelectorAll(`[${HIDDEN_ATTR}]`));
@@ -60,6 +62,15 @@ describe("SemanticPipeline", () => {
     expect(pipeline.restore(entry?.id ?? "")).toBe(true);
     expect(hiddenElements()).toHaveLength(0);
     expect(pipeline.list()[0]?.state).toBe("restored");
+  });
+
+  test("restores are reported (single and restore-all) for the restore-rate metric", async () => {
+    const { fixture, pipeline, restored } = setup("enforce");
+    await pipeline.scan(fixture.root, false);
+    const [entry] = pipeline.list();
+    pipeline.restore(entry?.id ?? "");
+    pipeline.restoreAll(); // nothing left hidden: must not report again
+    expect(restored).toEqual([[entry?.fingerprint ?? ""]]);
   });
 
   test("a user override (previously restored as not-an-ad) is never hidden", async () => {

@@ -39,7 +39,13 @@ async function renderSites(): Promise<void> {
 }
 
 async function renderLogCount(): Promise<void> {
-  $("log-count").textContent = String((await readLog()).length);
+  const log = await readLog();
+  const detections = log.filter((e) => (e.kind ?? "detection") === "detection").length;
+  const labels = log.filter((e) => e.kind === "label").length;
+  $("log-count").textContent =
+    log.length === 0
+      ? "The local log is empty."
+      : `${detections} semantic detections and ${labels} labels in the local log.`;
 }
 
 const REMOTE_STATUS = {

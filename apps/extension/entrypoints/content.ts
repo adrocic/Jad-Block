@@ -36,6 +36,7 @@ export default defineContentScript({
       classify: (candidates: CandidateFeatures[], sensitive: boolean) =>
         send<ClassifyResult[]>({ type: "classify", candidates, sensitive }),
       report: (entries: SemanticEntry[]) => void send({ type: "report", host, entries }),
+      onRestore: (fingerprints: string[]) => void send({ type: "restored", host, fingerprints }),
     });
 
     browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
