@@ -1,8 +1,8 @@
 import { describe, expect, test } from "bun:test";
-import { findCandidates } from "@semantic-blocker/candidate-detector";
-import { fixtureMeasure } from "@semantic-blocker/candidate-detector/testing";
-import { FIXTURES, loadFixture } from "@semantic-blocker/fixtures";
-import { sanitizeCandidate } from "@semantic-blocker/privacy";
+import { findCandidates } from "@jad-block/candidate-detector";
+import { fixtureMeasure } from "@jad-block/candidate-detector/testing";
+import { FIXTURES, loadFixture } from "@jad-block/fixtures";
+import { sanitizeCandidate } from "@jad-block/privacy";
 import { extractFeatures, visibleText } from "./index";
 
 function extractAll(name: (typeof FIXTURES)[number]) {

@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
-import { ClassifyResponse } from "@semantic-blocker/schemas";
-import { sampleFeatures } from "@semantic-blocker/schemas/testing";
+import { ClassifyResponse } from "@jad-block/schemas";
+import { sampleFeatures } from "@jad-block/schemas/testing";
 import { KILL_SWITCH_KEY } from "./env";
 import { app } from "./index";
 import { MAX_BODY_BYTES } from "./routes/classify";

@@ -1,6 +1,6 @@
 import { expect, test } from "bun:test";
-import { Classification } from "@semantic-blocker/schemas";
-import { sampleFeatures } from "@semantic-blocker/schemas/testing";
+import { Classification } from "@jad-block/schemas";
+import { sampleFeatures } from "@jad-block/schemas/testing";
 import { HeuristicClassifier } from "./index";
 
 const classifier = new HeuristicClassifier();

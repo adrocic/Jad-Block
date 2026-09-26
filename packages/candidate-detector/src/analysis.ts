@@ -1,5 +1,5 @@
-import { isGeneratedClass } from "@semantic-blocker/fingerprints";
-import type { LabelHint, LinkPattern, SizeBucket } from "@semantic-blocker/schemas";
+import { isGeneratedClass } from "@jad-block/fingerprints";
+import type { LabelHint, LinkPattern, SizeBucket } from "@jad-block/schemas";
 import { matchLabel } from "./labels";
 import type { Measure, Rect } from "./measure";
 

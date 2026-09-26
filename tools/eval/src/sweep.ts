@@ -1,4 +1,4 @@
-import { DEFAULT_POLICY, decide, type Policy } from "@semantic-blocker/decision-engine";
+import { DEFAULT_POLICY, decide, type Policy } from "@jad-block/decision-engine";
 import type { LabeledItem } from "./fixtures";
 import { type Confusion, confusion, precision, recall } from "./metrics";
 

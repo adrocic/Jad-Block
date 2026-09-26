@@ -1,4 +1,4 @@
-import type { CandidateFeatures, Classification } from "@semantic-blocker/schemas";
+import type { CandidateFeatures, Classification } from "@jad-block/schemas";
 
 /** Shadow mode logs what would be hidden without touching the page (see docs/build-plan.md). */
 export type Mode = "shadow" | "enforce";

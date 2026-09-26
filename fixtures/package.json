@@ -1,5 +1,5 @@
 {
-  "name": "@semantic-blocker/fixtures",
+  "name": "@jad-block/fixtures",
   "private": true,
   "type": "module",
   "exports": {
@@ -9,10 +9,10 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@semantic-blocker/candidate-detector": "workspace:*",
-    "@semantic-blocker/classifier": "workspace:*",
-    "@semantic-blocker/decision-engine": "workspace:*",
-    "@semantic-blocker/feature-extractor": "workspace:*",
-    "@semantic-blocker/privacy": "workspace:*"
+    "@jad-block/candidate-detector": "workspace:*",
+    "@jad-block/classifier": "workspace:*",
+    "@jad-block/decision-engine": "workspace:*",
+    "@jad-block/feature-extractor": "workspace:*",
+    "@jad-block/privacy": "workspace:*"
   }
 }

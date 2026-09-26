@@ -1,4 +1,4 @@
-import type { Mode } from "@semantic-blocker/decision-engine";
+import type { Mode } from "@jad-block/decision-engine";
 import { storage } from "wxt/utils/storage";
 
 /** Shadow mode logs semantic detections without hiding anything. It stays the default until

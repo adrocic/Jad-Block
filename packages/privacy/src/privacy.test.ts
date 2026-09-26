@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
-import { MAX_UNTRUSTED_TEXT } from "@semantic-blocker/schemas";
-import { sampleFeatures } from "@semantic-blocker/schemas/testing";
+import { MAX_UNTRUSTED_TEXT } from "@jad-block/schemas";
+import { sampleFeatures } from "@jad-block/schemas/testing";
 import { sanitizeCandidate, sanitizeText, sensitiveCategory } from "./index";
 
 describe("sanitizeText", () => {

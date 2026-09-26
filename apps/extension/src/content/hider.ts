@@ -1,6 +1,6 @@
 /** Attribute that marks semantically hidden elements. The background injects the matching
  * `display:none!important` rule as a user-origin stylesheet (see background/cosmetic.ts). */
-export const HIDDEN_ATTR = "data-sb-hidden";
+export const HIDDEN_ATTR = "data-jb-hidden";
 
 /** Reversible hiding: elements are marked, never removed, so every hide can be undone. */
 export class Hider {

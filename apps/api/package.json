@@ -1,5 +1,5 @@
 {
-  "name": "@semantic-blocker/api",
+  "name": "@jad-block/api",
   "private": true,
   "type": "module",
   "scripts": {
@@ -9,13 +9,13 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@semantic-blocker/classifier": "workspace:*",
-    "@semantic-blocker/schemas": "workspace:*",
+    "@jad-block/classifier": "workspace:*",
+    "@jad-block/schemas": "workspace:*",
     "hono": "^4.13.9"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20260925.2",
-    "@semantic-blocker/fixtures": "workspace:*",
+    "@jad-block/fixtures": "workspace:*",
     "wrangler": "^4.141.0"
   }
 }

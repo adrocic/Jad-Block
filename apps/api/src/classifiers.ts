@@ -1,4 +1,4 @@
-import { HeuristicClassifier, type SemanticClassifier } from "@semantic-blocker/classifier";
+import { HeuristicClassifier, type SemanticClassifier } from "@jad-block/classifier";
 import type { Env } from "./env";
 
 const heuristic = new HeuristicClassifier();

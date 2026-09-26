@@ -1,6 +1,6 @@
-import { domMeasure } from "@semantic-blocker/candidate-detector";
-import { sensitiveCategory } from "@semantic-blocker/privacy";
-import type { CandidateFeatures } from "@semantic-blocker/schemas";
+import { domMeasure } from "@jad-block/candidate-detector";
+import { sensitiveCategory } from "@jad-block/privacy";
+import type { CandidateFeatures } from "@jad-block/schemas";
 import { browser } from "wxt/browser";
 import { SemanticPipeline } from "@/src/content/pipeline";
 import { observeAdditions } from "@/src/content/scanner";

@@ -1,4 +1,4 @@
-import type { Classification } from "@semantic-blocker/schemas";
+import type { Classification } from "@jad-block/schemas";
 import { browser } from "wxt/browser";
 import knownFingerprints from "../known-fingerprints.json";
 

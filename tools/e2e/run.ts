@@ -160,8 +160,8 @@ try {
   await storageSet(sw, { mode: "enforce" });
   await loadPage(page, url);
   assert.ok(await isHidden(page, "#semantic-target"));
-  assert.ok(await page.$("#semantic-target[data-sb-hidden]"));
-  pass("enforce mode hides the native ad reversibly (data-sb-hidden)");
+  assert.ok(await page.$("#semantic-target[data-jb-hidden]"));
+  pass("enforce mode hides the native ad reversibly (data-jb-hidden)");
 
   await storageSet(sw, { remoteClassification: true, shadowLog: [] });
   await loadPage(page, url);

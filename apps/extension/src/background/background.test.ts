@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
-import { HeuristicClassifier } from "@semantic-blocker/classifier";
-import type { Classification } from "@semantic-blocker/schemas";
-import { sampleClassification, sampleFeatures } from "@semantic-blocker/schemas/testing";
+import { HeuristicClassifier } from "@jad-block/classifier";
+import type { Classification } from "@jad-block/schemas";
+import { sampleClassification, sampleFeatures } from "@jad-block/schemas/testing";
 import type { CacheHit } from "./cache";
 import { type ClassifyDeps, classifyCandidates } from "./classify";
 import { type FetchLike, RemoteClassifier } from "./remote";

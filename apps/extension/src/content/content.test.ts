@@ -1,9 +1,9 @@
 import { describe, expect, test } from "bun:test";
-import { fixtureMeasure } from "@semantic-blocker/candidate-detector/testing";
-import { HeuristicClassifier } from "@semantic-blocker/classifier";
-import type { Mode } from "@semantic-blocker/decision-engine";
-import { HIDE_LABELS, loadFixture } from "@semantic-blocker/fixtures";
-import type { CandidateFeatures } from "@semantic-blocker/schemas";
+import { fixtureMeasure } from "@jad-block/candidate-detector/testing";
+import { HeuristicClassifier } from "@jad-block/classifier";
+import type { Mode } from "@jad-block/decision-engine";
+import { HIDE_LABELS, loadFixture } from "@jad-block/fixtures";
+import type { CandidateFeatures } from "@jad-block/schemas";
 import type { ClassifyResult, SemanticEntry } from "../messages";
 import { HIDDEN_ATTR } from "./hider";
 import { SemanticPipeline } from "./pipeline";

@@ -1,11 +1,11 @@
-import { findCandidates } from "@semantic-blocker/candidate-detector";
-import { fixtureMeasure } from "@semantic-blocker/candidate-detector/testing";
-import type { SemanticClassifier } from "@semantic-blocker/classifier";
-import { DEFAULT_POLICY, decide, type Policy } from "@semantic-blocker/decision-engine";
-import { extractFeatures } from "@semantic-blocker/feature-extractor";
-import { FIXTURES, type FixtureName, HIDE_LABELS, loadFixture } from "@semantic-blocker/fixtures";
-import { sanitizeCandidate } from "@semantic-blocker/privacy";
-import type { CandidateFeatures, Classification } from "@semantic-blocker/schemas";
+import { findCandidates } from "@jad-block/candidate-detector";
+import { fixtureMeasure } from "@jad-block/candidate-detector/testing";
+import type { SemanticClassifier } from "@jad-block/classifier";
+import { DEFAULT_POLICY, decide, type Policy } from "@jad-block/decision-engine";
+import { extractFeatures } from "@jad-block/feature-extractor";
+import { FIXTURES, type FixtureName, HIDE_LABELS, loadFixture } from "@jad-block/fixtures";
+import { sanitizeCandidate } from "@jad-block/privacy";
+import type { CandidateFeatures, Classification } from "@jad-block/schemas";
 import type { Confusion } from "./metrics";
 
 /** One classified candidate with ground truth, reusable for threshold sweeps. */

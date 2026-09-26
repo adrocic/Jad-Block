@@ -1,5 +1,5 @@
 {
-  "name": "@semantic-blocker/candidate-detector",
+  "name": "@jad-block/candidate-detector",
   "private": true,
   "type": "module",
   "exports": {
@@ -10,10 +10,10 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@semantic-blocker/fingerprints": "workspace:*",
-    "@semantic-blocker/schemas": "workspace:*"
+    "@jad-block/fingerprints": "workspace:*",
+    "@jad-block/schemas": "workspace:*"
   },
   "devDependencies": {
-    "@semantic-blocker/fixtures": "workspace:*"
+    "@jad-block/fixtures": "workspace:*"
   }
 }

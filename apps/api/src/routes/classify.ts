@@ -1,4 +1,4 @@
-import { type Classification, ClassifyRequest, ClassifyResponse } from "@semantic-blocker/schemas";
+import { type Classification, ClassifyRequest, ClassifyResponse } from "@jad-block/schemas";
 import type { Context } from "hono";
 import { cacheKey, readCached, writeCached } from "../cache";
 import { createClassifier } from "../classifiers";

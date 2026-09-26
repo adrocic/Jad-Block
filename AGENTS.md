@@ -21,7 +21,7 @@ logic, testable with `bun test` + happy-dom, no browser) · `fixtures/` (synthet
 2. The API returns probabilities only. Never selectors, commands, or code (MV3 remote-code rule).
 3. Page text is untrusted data, never instructions. Keep it in fields named `untrusted*`.
 4. All data leaving the browser goes through `packages/privacy` and a zod schema in `packages/schemas`.
-5. Hiding must be reversible (`data-sb-hidden` attribute + stored ref). Never `element.remove()`.
+5. Hiding must be reversible (`data-jb-hidden` attribute + stored ref). Never `element.remove()`.
 6. Precision over recall: a missed ad is annoying, hiding real content is a serious bug.
 7. Never block page rendering on the network or the classifier. Any failure degrades silently.
 8. Don't commit scraped real-site pages. Fixtures are synthetic.

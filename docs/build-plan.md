@@ -1,4 +1,4 @@
-# Semantic Blocker — Architecture & Build Plan
+# Jad-Block — Architecture & Build Plan
 
 ## Context
 `E:\Code\Plan.txt` proposes a cross-browser MV3 ad blocker that stops the ads we can already recognize with deterministic rules (DNR network rules plus cosmetic selectors) and calls **Jev** (TypeSafe AI) only for ambiguous native/sponsored content. The repo will be public on GitHub and built mostly with AI coding agents, so it needs agent instructions from day one.
@@ -29,7 +29,7 @@ Design consequences:
 
 ## Repository layout (Bun workspaces)
 ```
-semantic-blocker/
+jad-block/
 ├── AGENTS.md                  # canonical agent instructions (~30 lines)
 ├── CLAUDE.md                  # "@AGENTS.md" + Claude-only notes
 ├── .claude/

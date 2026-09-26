@@ -1,4 +1,4 @@
-import { type CosmeticRules, cssForHost } from "@semantic-blocker/filter-engine";
+import { type CosmeticRules, cssForHost } from "@jad-block/filter-engine";
 import { browser } from "wxt/browser";
 
 type CosmeticAsset = Omit<CosmeticRules, "generic"> & { elemhide: string[]; generichide: string[] };
@@ -8,7 +8,7 @@ const GENERIC_CSS = "generated/cosmetic/generic.css";
 const COSMETIC_JSON = "/generated/cosmetic/cosmetic.json";
 
 /** Hides elements the semantic pipeline marked. User origin, so page styles can't override it. */
-export const SEMANTIC_HIDE_CSS = "[data-sb-hidden]{display:none!important}\n";
+export const SEMANTIC_HIDE_CSS = "[data-jb-hidden]{display:none!important}\n";
 
 let asset: Promise<CosmeticAsset> | undefined;
 

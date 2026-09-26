@@ -1,4 +1,4 @@
-import type { LogEvent } from "@semantic-blocker/schemas";
+import type { LogEvent } from "@jad-block/schemas";
 import { browser } from "wxt/browser";
 import type { SemanticEntry } from "../messages";
 

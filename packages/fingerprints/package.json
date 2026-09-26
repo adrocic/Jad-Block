@@ -1,5 +1,5 @@
 {
-  "name": "@semantic-blocker/fingerprints",
+  "name": "@jad-block/fingerprints",
   "private": true,
   "type": "module",
   "exports": {

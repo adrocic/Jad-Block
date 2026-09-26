@@ -1,5 +1,5 @@
-import type { Decision, Mode } from "@semantic-blocker/decision-engine";
-import type { CandidateFeatures, Classification } from "@semantic-blocker/schemas";
+import type { Decision, Mode } from "@jad-block/decision-engine";
+import type { CandidateFeatures, Classification } from "@jad-block/schemas";
 
 // Messages between the extension's own contexts. Background handlers still validate payloads
 // with zod, since a compromised page can't forge these but a bug upstream can.

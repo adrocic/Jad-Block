@@ -1,4 +1,4 @@
-import { type CandidateFeatures, Classification } from "@semantic-blocker/schemas";
+import { type CandidateFeatures, Classification } from "@jad-block/schemas";
 
 const TTL_SECONDS = 7 * 24 * 60 * 60;
 

@@ -1,5 +1,5 @@
 {
-  "name": "@semantic-blocker/extension",
+  "name": "@jad-block/extension",
   "private": true,
   "version": "0.1.0",
   "type": "module",
@@ -13,16 +13,16 @@
     "rules": "bun ../../packages/filter-engine/scripts/build-rules.ts"
   },
   "devDependencies": {
-    "@semantic-blocker/fixtures": "workspace:*",
+    "@jad-block/fixtures": "workspace:*",
     "wxt": "^0.21.4"
   },
   "dependencies": {
-    "@semantic-blocker/candidate-detector": "workspace:*",
-    "@semantic-blocker/classifier": "workspace:*",
-    "@semantic-blocker/decision-engine": "workspace:*",
-    "@semantic-blocker/feature-extractor": "workspace:*",
-    "@semantic-blocker/filter-engine": "workspace:*",
-    "@semantic-blocker/privacy": "workspace:*",
-    "@semantic-blocker/schemas": "workspace:*"
+    "@jad-block/candidate-detector": "workspace:*",
+    "@jad-block/classifier": "workspace:*",
+    "@jad-block/decision-engine": "workspace:*",
+    "@jad-block/feature-extractor": "workspace:*",
+    "@jad-block/filter-engine": "workspace:*",
+    "@jad-block/privacy": "workspace:*",
+    "@jad-block/schemas": "workspace:*"
   }
 }

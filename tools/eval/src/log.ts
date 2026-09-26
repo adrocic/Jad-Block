@@ -1,4 +1,4 @@
-import type { DetectionEvent, LabelEvent, LogEvent } from "@semantic-blocker/schemas";
+import type { DetectionEvent, LabelEvent, LogEvent } from "@jad-block/schemas";
 import type { LabeledItem } from "./fixtures";
 import { type Confusion, confusion } from "./metrics";
 

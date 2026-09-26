@@ -1,6 +1,6 @@
-import type { Candidate, Measure } from "@semantic-blocker/candidate-detector";
-import { fingerprint } from "@semantic-blocker/fingerprints";
-import type { CandidateFeatures, Position } from "@semantic-blocker/schemas";
+import type { Candidate, Measure } from "@jad-block/candidate-detector";
+import { fingerprint } from "@jad-block/fingerprints";
+import type { CandidateFeatures, Position } from "@jad-block/schemas";
 
 export interface ExtractOptions {
   pageUrl: string;
@@ -27,7 +27,7 @@ const EDGE_PX = 10;
 
 /**
  * Visible, non-input text of a candidate, whitespace-collapsed. Not yet privacy-sanitized:
- * callers must pass the result through `sanitizeCandidate` from @semantic-blocker/privacy.
+ * callers must pass the result through `sanitizeCandidate` from @jad-block/privacy.
  */
 export function visibleText(el: Element, measure: Measure): string {
   const parts: string[] = [];

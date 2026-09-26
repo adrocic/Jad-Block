@@ -1,4 +1,4 @@
-import type { CandidateFeatures, Classification, ElementType } from "@semantic-blocker/schemas";
+import type { CandidateFeatures, Classification, ElementType } from "@jad-block/schemas";
 
 /**
  * Anything that turns candidate features into evidence. Jev is one implementation (M5, in

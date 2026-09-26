@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { FIXTURES, HIDE_LABELS, loadFixture } from "@semantic-blocker/fixtures";
+import { FIXTURES, HIDE_LABELS, loadFixture } from "@jad-block/fixtures";
 import { findCandidates } from "./index";
 import { fixtureMeasure } from "./testing";
 

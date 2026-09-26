@@ -24,7 +24,7 @@ function ruleResources() {
 export default defineConfig({
   manifestVersion: 3,
   manifest: {
-    name: "Semantic Blocker",
+    name: "Jad-Block",
     description: "Blocks ads and sponsored content, including native ads that filter lists miss.",
     // Keep this list minimal. Adding a permission requires an ADR (see docs/adr/0005).
     permissions: ["storage", "declarativeNetRequest", "scripting"],

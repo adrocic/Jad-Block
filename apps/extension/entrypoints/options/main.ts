@@ -1,4 +1,4 @@
-import type { Mode } from "@semantic-blocker/decision-engine";
+import type { Mode } from "@jad-block/decision-engine";
 import { browser } from "wxt/browser";
 import { clearCache } from "@/src/background/cache";
 import { clearLog, readLog } from "@/src/background/log";
@@ -50,7 +50,7 @@ async function renderLogCount(): Promise<void> {
 
 const REMOTE_STATUS = {
   off: "Off: semantic detection runs a local heuristic only, and nothing about the pages you visit leaves your browser.",
-  on: "On: ambiguous elements are classified by the Semantic Blocker service. Sensitive sites are always classified locally.",
+  on: "On: ambiguous elements are classified by the Jad-Block service. Sensitive sites are always classified locally.",
   unavailable: "AI classification isn't available in this build.",
   denied: "Firefox didn't grant the data-collection permission, so AI classification stays off.",
 };
@@ -108,7 +108,7 @@ async function init(): Promise<void> {
     const blob = new Blob([JSON.stringify(log, null, 2)], { type: "application/json" });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = `semantic-blocker-shadow-log-${new Date().toISOString().slice(0, 10)}.json`;
+    link.download = `jad-block-shadow-log-${new Date().toISOString().slice(0, 10)}.json`;
     link.click();
     // Revoking synchronously can cancel the download in some browsers.
     setTimeout(() => URL.revokeObjectURL(link.href), 10_000);

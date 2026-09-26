@@ -1,5 +1,5 @@
 {
-  "name": "@semantic-blocker/eval",
+  "name": "@jad-block/eval",
   "private": true,
   "type": "module",
   "scripts": {
@@ -7,12 +7,12 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@semantic-blocker/candidate-detector": "workspace:*",
-    "@semantic-blocker/classifier": "workspace:*",
-    "@semantic-blocker/decision-engine": "workspace:*",
-    "@semantic-blocker/feature-extractor": "workspace:*",
-    "@semantic-blocker/fixtures": "workspace:*",
-    "@semantic-blocker/privacy": "workspace:*",
-    "@semantic-blocker/schemas": "workspace:*"
+    "@jad-block/candidate-detector": "workspace:*",
+    "@jad-block/classifier": "workspace:*",
+    "@jad-block/decision-engine": "workspace:*",
+    "@jad-block/feature-extractor": "workspace:*",
+    "@jad-block/fixtures": "workspace:*",
+    "@jad-block/privacy": "workspace:*",
+    "@jad-block/schemas": "workspace:*"
   }
 }

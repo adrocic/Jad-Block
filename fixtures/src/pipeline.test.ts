@@ -1,10 +1,10 @@
 import { describe, expect, test } from "bun:test";
-import { findCandidates } from "@semantic-blocker/candidate-detector";
-import { fixtureMeasure } from "@semantic-blocker/candidate-detector/testing";
-import { HeuristicClassifier } from "@semantic-blocker/classifier";
-import { decide } from "@semantic-blocker/decision-engine";
-import { extractFeatures } from "@semantic-blocker/feature-extractor";
-import { sanitizeCandidate } from "@semantic-blocker/privacy";
+import { findCandidates } from "@jad-block/candidate-detector";
+import { fixtureMeasure } from "@jad-block/candidate-detector/testing";
+import { HeuristicClassifier } from "@jad-block/classifier";
+import { decide } from "@jad-block/decision-engine";
+import { extractFeatures } from "@jad-block/feature-extractor";
+import { sanitizeCandidate } from "@jad-block/privacy";
 import { FIXTURES, HIDE_LABELS, loadFixture } from "./index";
 
 // End-to-end over the pure packages: detect → extract → sanitize → classify → decide (enforce).

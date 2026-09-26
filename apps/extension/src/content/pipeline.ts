@@ -1,8 +1,8 @@
-import { findCandidates, type Measure } from "@semantic-blocker/candidate-detector";
-import { type Decision, decide, type Mode } from "@semantic-blocker/decision-engine";
-import { extractFeatures } from "@semantic-blocker/feature-extractor";
-import { sanitizeCandidate } from "@semantic-blocker/privacy";
-import { type CandidateFeatures, MAX_CANDIDATES_PER_REQUEST } from "@semantic-blocker/schemas";
+import { findCandidates, type Measure } from "@jad-block/candidate-detector";
+import { type Decision, decide, type Mode } from "@jad-block/decision-engine";
+import { extractFeatures } from "@jad-block/feature-extractor";
+import { sanitizeCandidate } from "@jad-block/privacy";
+import { type CandidateFeatures, MAX_CANDIDATES_PER_REQUEST } from "@jad-block/schemas";
 import type { ClassifyResult, SemanticEntry } from "../messages";
 import { Hider } from "./hider";
 

@@ -1,9 +1,5 @@
-import type { SemanticClassifier } from "@semantic-blocker/classifier";
-import {
-  type CandidateFeatures,
-  type Classification,
-  ClassifyResponse,
-} from "@semantic-blocker/schemas";
+import type { SemanticClassifier } from "@jad-block/classifier";
+import { type CandidateFeatures, type Classification, ClassifyResponse } from "@jad-block/schemas";
 
 const TIMEOUT_MS = 3000;
 const DEFAULT_COOLDOWN_MS = 5 * 60 * 1000;

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { sampleClassification, sampleFeatures } from "@semantic-blocker/schemas/testing";
+import { sampleClassification, sampleFeatures } from "@jad-block/schemas/testing";
 import { DEFAULT_POLICY, decide } from "./index";
 
 describe("decide", () => {

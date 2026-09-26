@@ -12,118 +12,118 @@
       },
     },
     "apps/api": {
-      "name": "@semantic-blocker/api",
+      "name": "@jad-block/api",
       "dependencies": {
-        "@semantic-blocker/classifier": "workspace:*",
-        "@semantic-blocker/schemas": "workspace:*",
+        "@jad-block/classifier": "workspace:*",
+        "@jad-block/schemas": "workspace:*",
         "hono": "^4.13.9",
       },
       "devDependencies": {
         "@cloudflare/workers-types": "^5.20260925.2",
-        "@semantic-blocker/fixtures": "workspace:*",
+        "@jad-block/fixtures": "workspace:*",
         "wrangler": "^4.141.0",
       },
     },
     "apps/extension": {
-      "name": "@semantic-blocker/extension",
+      "name": "@jad-block/extension",
       "version": "0.1.0",
       "dependencies": {
-        "@semantic-blocker/candidate-detector": "workspace:*",
-        "@semantic-blocker/classifier": "workspace:*",
-        "@semantic-blocker/decision-engine": "workspace:*",
-        "@semantic-blocker/feature-extractor": "workspace:*",
-        "@semantic-blocker/filter-engine": "workspace:*",
-        "@semantic-blocker/privacy": "workspace:*",
-        "@semantic-blocker/schemas": "workspace:*",
+        "@jad-block/candidate-detector": "workspace:*",
+        "@jad-block/classifier": "workspace:*",
+        "@jad-block/decision-engine": "workspace:*",
+        "@jad-block/feature-extractor": "workspace:*",
+        "@jad-block/filter-engine": "workspace:*",
+        "@jad-block/privacy": "workspace:*",
+        "@jad-block/schemas": "workspace:*",
       },
       "devDependencies": {
-        "@semantic-blocker/fixtures": "workspace:*",
+        "@jad-block/fixtures": "workspace:*",
         "wxt": "^0.21.4",
       },
     },
     "fixtures": {
-      "name": "@semantic-blocker/fixtures",
+      "name": "@jad-block/fixtures",
       "devDependencies": {
-        "@semantic-blocker/candidate-detector": "workspace:*",
-        "@semantic-blocker/classifier": "workspace:*",
-        "@semantic-blocker/decision-engine": "workspace:*",
-        "@semantic-blocker/feature-extractor": "workspace:*",
-        "@semantic-blocker/privacy": "workspace:*",
+        "@jad-block/candidate-detector": "workspace:*",
+        "@jad-block/classifier": "workspace:*",
+        "@jad-block/decision-engine": "workspace:*",
+        "@jad-block/feature-extractor": "workspace:*",
+        "@jad-block/privacy": "workspace:*",
       },
     },
     "packages/candidate-detector": {
-      "name": "@semantic-blocker/candidate-detector",
+      "name": "@jad-block/candidate-detector",
       "dependencies": {
-        "@semantic-blocker/fingerprints": "workspace:*",
-        "@semantic-blocker/schemas": "workspace:*",
+        "@jad-block/fingerprints": "workspace:*",
+        "@jad-block/schemas": "workspace:*",
       },
       "devDependencies": {
-        "@semantic-blocker/fixtures": "workspace:*",
+        "@jad-block/fixtures": "workspace:*",
       },
     },
     "packages/classifier": {
-      "name": "@semantic-blocker/classifier",
+      "name": "@jad-block/classifier",
       "dependencies": {
-        "@semantic-blocker/schemas": "workspace:*",
+        "@jad-block/schemas": "workspace:*",
       },
     },
     "packages/decision-engine": {
-      "name": "@semantic-blocker/decision-engine",
+      "name": "@jad-block/decision-engine",
       "dependencies": {
-        "@semantic-blocker/schemas": "workspace:*",
+        "@jad-block/schemas": "workspace:*",
       },
     },
     "packages/feature-extractor": {
-      "name": "@semantic-blocker/feature-extractor",
+      "name": "@jad-block/feature-extractor",
       "dependencies": {
-        "@semantic-blocker/candidate-detector": "workspace:*",
-        "@semantic-blocker/fingerprints": "workspace:*",
-        "@semantic-blocker/schemas": "workspace:*",
+        "@jad-block/candidate-detector": "workspace:*",
+        "@jad-block/fingerprints": "workspace:*",
+        "@jad-block/schemas": "workspace:*",
       },
       "devDependencies": {
-        "@semantic-blocker/fixtures": "workspace:*",
-        "@semantic-blocker/privacy": "workspace:*",
+        "@jad-block/fixtures": "workspace:*",
+        "@jad-block/privacy": "workspace:*",
       },
     },
     "packages/filter-engine": {
-      "name": "@semantic-blocker/filter-engine",
+      "name": "@jad-block/filter-engine",
       "dependencies": {
         "@adguard/dnr-converter": "^1.1.2",
         "@adguard/re2-wasm": "1.2.0",
       },
     },
     "packages/fingerprints": {
-      "name": "@semantic-blocker/fingerprints",
+      "name": "@jad-block/fingerprints",
     },
     "packages/privacy": {
-      "name": "@semantic-blocker/privacy",
+      "name": "@jad-block/privacy",
       "dependencies": {
-        "@semantic-blocker/schemas": "workspace:*",
+        "@jad-block/schemas": "workspace:*",
       },
     },
     "packages/schemas": {
-      "name": "@semantic-blocker/schemas",
+      "name": "@jad-block/schemas",
       "dependencies": {
         "zod": "^4.6.5",
       },
     },
     "tools/e2e": {
-      "name": "@semantic-blocker/e2e",
+      "name": "@jad-block/e2e",
       "devDependencies": {
         "@types/chrome": "^0.3.0",
         "playwright": "^1.63.0",
       },
     },
     "tools/eval": {
-      "name": "@semantic-blocker/eval",
+      "name": "@jad-block/eval",
       "dependencies": {
-        "@semantic-blocker/candidate-detector": "workspace:*",
-        "@semantic-blocker/classifier": "workspace:*",
-        "@semantic-blocker/decision-engine": "workspace:*",
-        "@semantic-blocker/feature-extractor": "workspace:*",
-        "@semantic-blocker/fixtures": "workspace:*",
-        "@semantic-blocker/privacy": "workspace:*",
-        "@semantic-blocker/schemas": "workspace:*",
+        "@jad-block/candidate-detector": "workspace:*",
+        "@jad-block/classifier": "workspace:*",
+        "@jad-block/decision-engine": "workspace:*",
+        "@jad-block/feature-extractor": "workspace:*",
+        "@jad-block/fixtures": "workspace:*",
+        "@jad-block/privacy": "workspace:*",
+        "@jad-block/schemas": "workspace:*",
       },
     },
   },
@@ -300,6 +300,32 @@
 
     "@img/sharp-win32-x64": ["@img/sharp-win32-x64@0.35.4", "", { "os": "win32", "cpu": "x64" }, "sha512-XtmnYhBcrORsJ4XJngyzr/EWP0hRZLAZRFaApdKuviyqF78+ylxh2y06ZmtULAMOnObJ3ucpN0AcwSWnMowTRg=="],
 
+    "@jad-block/api": ["@jad-block/api@workspace:apps/api"],
+
+    "@jad-block/candidate-detector": ["@jad-block/candidate-detector@workspace:packages/candidate-detector"],
+
+    "@jad-block/classifier": ["@jad-block/classifier@workspace:packages/classifier"],
+
+    "@jad-block/decision-engine": ["@jad-block/decision-engine@workspace:packages/decision-engine"],
+
+    "@jad-block/e2e": ["@jad-block/e2e@workspace:tools/e2e"],
+
+    "@jad-block/eval": ["@jad-block/eval@workspace:tools/eval"],
+
+    "@jad-block/extension": ["@jad-block/extension@workspace:apps/extension"],
+
+    "@jad-block/feature-extractor": ["@jad-block/feature-extractor@workspace:packages/feature-extractor"],
+
+    "@jad-block/filter-engine": ["@jad-block/filter-engine@workspace:packages/filter-engine"],
+
+    "@jad-block/fingerprints": ["@jad-block/fingerprints@workspace:packages/fingerprints"],
+
+    "@jad-block/fixtures": ["@jad-block/fixtures@workspace:fixtures"],
+
+    "@jad-block/privacy": ["@jad-block/privacy@workspace:packages/privacy"],
+
+    "@jad-block/schemas": ["@jad-block/schemas@workspace:packages/schemas"],
+
     "@jridgewell/gen-mapping": ["@jridgewell/gen-mapping@0.3.13", "", { "dependencies": { "@jridgewell/sourcemap-codec": "^1.5.0", "@jridgewell/trace-mapping": "^0.3.24" } }, "sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA=="],
 
     "@jridgewell/remapping": ["@jridgewell/remapping@2.3.5", "", { "dependencies": { "@jridgewell/gen-mapping": "^0.3.5", "@jridgewell/trace-mapping": "^0.3.24" } }, "sha512-LI9u/+laYG4Ds1TDKSJW2YPrIlcVYOwi2fUC6xB43lueCjgxV4lffOCZCtYFiH6TNOX+tQKXx97T4IKHbhyHEQ=="],
@@ -349,32 +375,6 @@
     "@rolldown/binding-win32-x64-msvc": ["@rolldown/binding-win32-x64-msvc@1.2.11", "", { "os": "win32", "cpu": "x64" }, "sha512-/PzKqzAJ03i19oy2ItPvyvaVjOjBCNnfaJs8yvUdGBKmiESgnrJSQ2awd81QzFbbnAmu7YO9ZnJrDCb9VSJPRA=="],
 
     "@rolldown/pluginutils": ["@rolldown/pluginutils@1.0.1", "", {}, "sha512-2j9bGt5Jh8hj+vPtgzPtl72j0yRxHAyumoo6TNfAjsLB04UtpSvPbPcDcBMxz7n+9CYB0c1GxQFxYRg2jimqGw=="],
-
-    "@semantic-blocker/api": ["@semantic-blocker/api@workspace:apps/api"],
-
-    "@semantic-blocker/candidate-detector": ["@semantic-blocker/candidate-detector@workspace:packages/candidate-detector"],
-
-    "@semantic-blocker/classifier": ["@semantic-blocker/classifier@workspace:packages/classifier"],
-
-    "@semantic-blocker/decision-engine": ["@semantic-blocker/decision-engine@workspace:packages/decision-engine"],
-
-    "@semantic-blocker/e2e": ["@semantic-blocker/e2e@workspace:tools/e2e"],
-
-    "@semantic-blocker/eval": ["@semantic-blocker/eval@workspace:tools/eval"],
-
-    "@semantic-blocker/extension": ["@semantic-blocker/extension@workspace:apps/extension"],
-
-    "@semantic-blocker/feature-extractor": ["@semantic-blocker/feature-extractor@workspace:packages/feature-extractor"],
-
-    "@semantic-blocker/filter-engine": ["@semantic-blocker/filter-engine@workspace:packages/filter-engine"],
-
-    "@semantic-blocker/fingerprints": ["@semantic-blocker/fingerprints@workspace:packages/fingerprints"],
-
-    "@semantic-blocker/fixtures": ["@semantic-blocker/fixtures@workspace:fixtures"],
-
-    "@semantic-blocker/privacy": ["@semantic-blocker/privacy@workspace:packages/privacy"],
-
-    "@semantic-blocker/schemas": ["@semantic-blocker/schemas@workspace:packages/schemas"],
 
     "@sindresorhus/is": ["@sindresorhus/is@7.2.0", "", {}, "sha512-P1Cz1dWaFfR4IR+U13mqqiGsLFf1KbayybWwdd2vfctdV6hDpUkgCY0nKOLLTMSoRd/jJNjtbqzf13K8DCCXQw=="],
 

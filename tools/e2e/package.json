@@ -1,5 +1,5 @@
 {
-  "name": "@semantic-blocker/e2e",
+  "name": "@jad-block/e2e",
   "private": true,
   "type": "module",
   "scripts": {

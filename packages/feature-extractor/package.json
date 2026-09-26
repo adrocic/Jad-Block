@@ -1,5 +1,5 @@
 {
-  "name": "@semantic-blocker/feature-extractor",
+  "name": "@jad-block/feature-extractor",
   "private": true,
   "type": "module",
   "exports": {
@@ -9,12 +9,12 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@semantic-blocker/candidate-detector": "workspace:*",
-    "@semantic-blocker/fingerprints": "workspace:*",
-    "@semantic-blocker/schemas": "workspace:*"
+    "@jad-block/candidate-detector": "workspace:*",
+    "@jad-block/fingerprints": "workspace:*",
+    "@jad-block/schemas": "workspace:*"
   },
   "devDependencies": {
-    "@semantic-blocker/fixtures": "workspace:*",
-    "@semantic-blocker/privacy": "workspace:*"
+    "@jad-block/fixtures": "workspace:*",
+    "@jad-block/privacy": "workspace:*"
   }
 }

@@ -53,7 +53,7 @@ export default defineBackground(() => {
     // Only our own extension contexts may talk to the background.
     if (sender.id !== browser.runtime.id) return false;
     handle(message as BackgroundMessage, sender).then(sendResponse, (error: unknown) => {
-      console.error("[semantic-blocker]", error);
+      console.error("[jad-block]", error);
       sendResponse(undefined);
     });
     return true; // keeps the channel open for the async response

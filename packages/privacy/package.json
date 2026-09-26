@@ -1,5 +1,5 @@
 {
-  "name": "@semantic-blocker/privacy",
+  "name": "@jad-block/privacy",
   "private": true,
   "type": "module",
   "exports": {
@@ -9,6 +9,6 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@semantic-blocker/schemas": "workspace:*"
+    "@jad-block/schemas": "workspace:*"
   }
 }

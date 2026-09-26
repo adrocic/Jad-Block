@@ -1,9 +1,5 @@
-import { HeuristicClassifier, type SemanticClassifier } from "@semantic-blocker/classifier";
-import {
-  type CandidateFeatures,
-  type Classification,
-  ClassifyRequest,
-} from "@semantic-blocker/schemas";
+import { HeuristicClassifier, type SemanticClassifier } from "@jad-block/classifier";
+import { type CandidateFeatures, type Classification, ClassifyRequest } from "@jad-block/schemas";
 import type { ClassifyResult } from "../messages";
 import { API_URL, getInstallId, remoteSetting } from "../settings";
 import { type CacheHit, lookup, readOverrides, store } from "./cache";

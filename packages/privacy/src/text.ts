@@ -1,4 +1,4 @@
-import { MAX_UNTRUSTED_TEXT } from "@semantic-blocker/schemas";
+import { MAX_UNTRUSTED_TEXT } from "@jad-block/schemas";
 
 const EMAIL = /[\p{L}\p{N}._%+-]+@[\p{L}\p{N}.-]+\.[\p{L}]{2,}/gu;
 const URL_LIKE = /\b(?:https?:\/\/|www\.)\S+/gi;

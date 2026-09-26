@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
-import { HeuristicClassifier } from "@semantic-blocker/classifier";
-import { type LogEvent, ShadowLog } from "@semantic-blocker/schemas";
-import { sampleClassification, sampleFeatures } from "@semantic-blocker/schemas/testing";
+import { HeuristicClassifier } from "@jad-block/classifier";
+import { type LogEvent, ShadowLog } from "@jad-block/schemas";
+import { sampleClassification, sampleFeatures } from "@jad-block/schemas/testing";
 import { evaluateFixtures, type LabeledItem, tally } from "./fixtures";
 import { analyzeLog } from "./log";
 import { confusion, precision, recall } from "./metrics";

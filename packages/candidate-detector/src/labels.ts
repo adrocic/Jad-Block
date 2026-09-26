@@ -1,4 +1,4 @@
-import type { LabelHint } from "@semantic-blocker/schemas";
+import type { LabelHint } from "@jad-block/schemas";
 
 /** Disclosure labels are short. Longer text that merely mentions "sponsored" is not a label. */
 export const MAX_LABEL_LENGTH = 40;

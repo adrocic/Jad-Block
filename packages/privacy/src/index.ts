@@ -1,4 +1,4 @@
-import { CandidateFeatures } from "@semantic-blocker/schemas";
+import { CandidateFeatures } from "@jad-block/schemas";
 import { sanitizeText } from "./text";
 
 export { type SensitiveCategory, sensitiveCategory } from "./sites";

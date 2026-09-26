@@ -1,5 +1,5 @@
 {
-  "name": "@semantic-blocker/filter-engine",
+  "name": "@jad-block/filter-engine",
   "private": true,
   "type": "module",
   "exports": {

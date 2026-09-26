@@ -1,5 +1,5 @@
 {
-  "name": "semantic-blocker",
+  "name": "jad-block",
   "private": true,
   "license": "GPL-3.0-only",
   "type": "module",
@@ -14,13 +14,13 @@
     "fix": "biome check --write .",
     "typecheck": "bun run --filter '*' typecheck",
     "test": "bun test",
-    "build": "bun run --filter '@semantic-blocker/extension' build",
-    "dev:chrome": "bun run --filter '@semantic-blocker/extension' dev",
-    "dev:firefox": "bun run --filter '@semantic-blocker/extension' dev:firefox",
-    "dev:api": "bun run --filter '@semantic-blocker/api' dev",
+    "build": "bun run --filter '@jad-block/extension' build",
+    "dev:chrome": "bun run --filter '@jad-block/extension' dev",
+    "dev:firefox": "bun run --filter '@jad-block/extension' dev:firefox",
+    "dev:api": "bun run --filter '@jad-block/api' dev",
     "lists:update": "bun packages/filter-engine/scripts/update-lists.ts",
-    "e2e": "bun run --filter @semantic-blocker/e2e e2e",
-    "eval": "bun run --filter @semantic-blocker/eval eval"
+    "e2e": "bun run --filter @jad-block/e2e e2e",
+    "eval": "bun run --filter @jad-block/eval eval"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.14",

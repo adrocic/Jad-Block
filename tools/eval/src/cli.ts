@@ -7,8 +7,8 @@
 import "../../test-setup";
 import { readFile } from "node:fs/promises";
 import { parseArgs } from "node:util";
-import { HeuristicClassifier } from "@semantic-blocker/classifier";
-import { ShadowLog } from "@semantic-blocker/schemas";
+import { HeuristicClassifier } from "@jad-block/classifier";
+import { ShadowLog } from "@jad-block/schemas";
 import { evaluateFixtures } from "./fixtures";
 import { analyzeLog } from "./log";
 import { fixtureReport, logReport, sweepReport } from "./report";
