@@ -3,9 +3,9 @@ export interface Env {
   CACHE: KVNamespace;
   /** Per-client limit, keyed by the extension's random install ID (or IP as fallback). */
   CLIENT_LIMITER: RateLimit;
-  /** Whole-service limit that keeps us under the upstream model's quota (Jev: 1,200 req/min). */
+  /** Whole-service limit that keeps us under the upstream model's quota (Jev). Counts classifier calls, not API requests. */
   GLOBAL_LIMITER: RateLimit;
-  /** Which SemanticClassifier to use: "heuristic" (default) or "jev" (M5). */
+  /** Which SemanticClassifier to use: "heuristic" (default) or "jev". */
   CLASSIFIER?: string;
   /** Secret, set with `wrangler secret put TYPESAFE_API_KEY`. Never shipped in the extension. */
   TYPESAFE_API_KEY?: string;

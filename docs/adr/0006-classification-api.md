@@ -10,7 +10,7 @@ sanitized candidates, max 64 KB) and returns a strict `ClassifyResponse` (probab
 | Concern | Choice |
 |---|---|
 | Server cache | Workers KV, 7-day TTL, key = model version + **SHA-256 of the complete sanitized features** |
-| Rate limits | Per client (random install ID, IP fallback): 60/min. Global: 1,000/min (Jev allows 1,200) |
+| Rate limits | Per client (random install ID, IP fallback): 60 requests/min. Global: 1,000 classifier calls/min, one per uncached candidate (amended 2026-10-12: it counted requests, which fan out to up to 20 Jev calls each) |
 | Kill switch | KV `config:kill-switch` = `on` → 503; clients fall back to local classification |
 | Client failure handling | 3 s timeout, schema-validated responses, circuit breaker honoring `Retry-After` |
 | Opt-in | Remote classification is off by default; sensitive sites are never sent |

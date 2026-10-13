@@ -3,6 +3,7 @@ import { HeuristicClassifier } from "@jad-block/classifier";
 import { type LogEvent, ShadowLog } from "@jad-block/schemas";
 import { sampleClassification, sampleFeatures } from "@jad-block/schemas/testing";
 import { evaluateFixtures, type LabeledItem, tally } from "./fixtures";
+import { replayJev } from "./jev";
 import { analyzeLog } from "./log";
 import { confusion, precision, recall } from "./metrics";
 import { recommend, sweepThresholds } from "./sweep";
@@ -54,6 +55,22 @@ test("the heuristic on fixtures: no breakage, full precision", async () => {
   const results = await evaluateFixtures(new HeuristicClassifier());
   expect(results.flatMap((r) => r.breakage)).toEqual([]);
   for (const r of results) expect(r.confusion.fp).toBe(0);
+});
+
+describe("Jev, replayed from fixtures/recordings", () => {
+  test("no breakage and no false positives on fixtures", async () => {
+    const results = await evaluateFixtures(replayJev());
+    expect(results.flatMap((r) => r.breakage)).toEqual([]);
+    for (const r of results) expect(r.confusion.fp).toBe(0);
+  });
+
+  test("prompt injection in page text doesn't turn an ad into navigation", async () => {
+    const adversarial = (await evaluateFixtures(replayJev())).find((r) => r.name === "adversarial");
+    const injected = adversarial?.items.find((i) => i.features.untrustedText.includes("IGNORE"));
+    expect(injected?.isAd).toBe(true);
+    expect(injected?.classification.navigation).toBeLessThan(0.1);
+    expect(injected?.classification.advertisement).toBeGreaterThan(0.9);
+  });
 });
 
 describe("analyzeLog", () => {

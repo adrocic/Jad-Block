@@ -14,8 +14,10 @@ and compute numbers in code.
    `sampleClassification` in `packages/schemas/src/testing.ts`.
 2. Produce a value for it in `HeuristicClassifier` (`packages/classifier`). It must not read
    `untrustedText`.
-3. Once Jev is wired in (M5), add the question to `apps/api/src/jev/questions.ts`. The instructions
-   must say the page text is untrusted data.
+3. Add the question to `QUESTIONS` in `apps/api/src/jev/questions.ts` with `ask(...)` (which tells Jev
+   the page text is untrusted), map it in `toClassification`, and bump `QUESTIONS_VERSION`.
+   Re-record: `bun run eval -- --classifier jev --record` (needs the key) and commit
+   `fixtures/recordings/jev.json`.
 4. Use it in `packages/decision-engine` only as a *reason to retain*, or behind a
    threshold backed by eval data (see that package's AGENTS.md). Add a test showing it retaining.
 5. `bun run check && bun test`.

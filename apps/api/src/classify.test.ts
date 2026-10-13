@@ -120,17 +120,29 @@ describe("POST /v1/classify", () => {
     expect((await post(b, body, other)).status).toBe(200);
   });
 
-  test("the global limit protects the upstream model quota", async () => {
+  test("the global limit counts classifier calls, one per uncached candidate", async () => {
+    const b = fakeEnv({ globalLimit: 2 });
+    const other = { "x-install-id": "11111111-2222-4333-8444-555555555555" };
+    const twoNew = [sampleFeatures({ tag: "aside" }), sampleFeatures({ tag: "section" })];
+    expect((await post(b, { candidates: twoNew })).status).toBe(200);
+    await b.settle();
+    expect((await post(b, { candidates: [sampleFeatures()] }, other)).status).toBe(429);
+  });
+
+  test("cache hits don't spend the global limit", async () => {
     const b = fakeEnv({ globalLimit: 1 });
-    expect((await post(b, { candidates: [sampleFeatures()] })).status).toBe(200);
-    const second = await post(
-      b,
-      { candidates: [sampleFeatures()] },
-      {
-        "x-install-id": "11111111-2222-4333-8444-555555555555",
-      },
-    );
-    expect(second.status).toBe(429);
+    const body = { candidates: [sampleFeatures()] };
+    expect((await post(b, body)).status).toBe(200);
+    await b.settle();
+    expect((await post(b, body)).status).toBe(200);
+  });
+
+  test("CLASSIFIER=jev without a key fails closed, so clients fall back locally", async () => {
+    const b = fakeEnv();
+    b.env.CLASSIFIER = "jev";
+    const res = await post(b, { candidates: [sampleFeatures()] });
+    expect(res.status).toBe(500);
+    expect(await res.text()).not.toContain("TYPESAFE");
   });
 
   test("the kill switch answers 503 so clients fall back to local classification", async () => {

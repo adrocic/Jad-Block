@@ -6,16 +6,21 @@
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
     "cf-typegen": "wrangler types",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "dev:jev": "wrangler dev --var CLASSIFIER:jev"
   },
   "dependencies": {
     "@jad-block/classifier": "workspace:*",
     "@jad-block/schemas": "workspace:*",
+    "@typesafe-ai/sdk": "0.6.0",
     "hono": "^4.13.9"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20260925.2",
     "@jad-block/fixtures": "workspace:*",
     "wrangler": "^4.141.0"
+  },
+  "exports": {
+    "./jev": "./src/jev/index.ts"
   }
 }

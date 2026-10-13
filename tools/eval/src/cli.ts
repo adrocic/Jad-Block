@@ -3,13 +3,18 @@
 //   bun run eval -- --sweep                   ...plus a threshold sweep over fixture candidates
 //   bun run eval -- --log <export.json>       a shadow log exported from the options page
 //          [--target 0.99] [--min-hidden 20]  sweep target precision and minimum support
+//   bun run eval -- --classifier jev          fixtures through live Jev (key from env or apps/api/.dev.vars)
+//          [--record]                         ...and save the responses for CI replay (fixtures/recordings)
+//   bun run eval -- --classifier jev-replay   fixtures through recorded Jev responses (offline)
 // Keep real exports out of the repo (datasets/ is gitignored).
+import { nativeFetch } from "./native-fetch";
 import "../../test-setup";
 import { readFile } from "node:fs/promises";
 import { parseArgs } from "node:util";
-import { HeuristicClassifier } from "@jad-block/classifier";
+import { HeuristicClassifier, type SemanticClassifier } from "@jad-block/classifier";
 import { ShadowLog } from "@jad-block/schemas";
 import { evaluateFixtures } from "./fixtures";
+import { liveJev, loadApiKey, RECORDINGS_PATH, replayJev } from "./jev";
 import { analyzeLog } from "./log";
 import { fixtureReport, logReport, sweepReport } from "./report";
 import { recommend, sweepThresholds } from "./sweep";
@@ -18,6 +23,8 @@ const { values } = parseArgs({
   options: {
     log: { type: "string" },
     sweep: { type: "boolean", default: false },
+    classifier: { type: "string", default: "heuristic" },
+    record: { type: "boolean", default: false },
     target: { type: "string", default: "0.99" },
     "min-hidden": { type: "string", default: "20" },
   },
@@ -40,8 +47,13 @@ if (values.log) {
     console.log(`\n${sweepReport(rows, best, target, minHidden, "log")}`);
   }
 } else {
-  const classifier = new HeuristicClassifier();
+  const { classifier, save } = pickClassifier();
   const results = await evaluateFixtures(classifier);
+  if (save) {
+    await save();
+    console.log(`Saved Jev recordings to ${RECORDINGS_PATH}
+`);
+  }
   console.log(fixtureReport(results, classifier.modelVersion));
   if (values.sweep) {
     // Fixtures only sanity-check: any fixture false positive disqualifies (target 100%).
@@ -49,4 +61,25 @@ if (values.log) {
     console.log(`\n${sweepReport(rows, recommend(rows, 1, 3), 1, 3, "fixtures")}`);
   }
   if (results.some((r) => r.breakage.length > 0)) process.exitCode = 1;
+}
+
+function pickClassifier(): { classifier: SemanticClassifier; save?: () => Promise<void> } {
+  switch (values.classifier) {
+    case "heuristic":
+      return { classifier: new HeuristicClassifier() };
+    case "jev-replay":
+      return { classifier: replayJev() };
+    case "jev": {
+      const apiKey = loadApiKey();
+      if (!apiKey) {
+        console.error("Set TYPESAFE_API_KEY or put it in apps/api/.dev.vars.");
+        process.exit(2);
+      }
+      const jev = liveJev(apiKey, nativeFetch, values.record);
+      return values.record ? jev : { classifier: jev.classifier };
+    }
+    default:
+      console.error(`Unknown --classifier "${values.classifier}" (heuristic, jev, jev-replay).`);
+      process.exit(2);
+  }
 }

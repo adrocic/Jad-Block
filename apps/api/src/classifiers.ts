@@ -1,5 +1,6 @@
 import { HeuristicClassifier, type SemanticClassifier } from "@jad-block/classifier";
 import type { Env } from "./env";
+import { createJevClassifier } from "./jev";
 
 const heuristic = new HeuristicClassifier();
 
@@ -13,13 +14,17 @@ const serverHeuristic: SemanticClassifier = {
 };
 
 /**
- * Selects the classifier backing /v1/classify. Jev plugs in here in M5 behind the same interface;
- * until then the service runs the deterministic heuristic so the whole path can be exercised.
+ * Selects the classifier backing /v1/classify. The heuristic stays the default so local dev,
+ * tests and e2e never need a key or the network; `CLASSIFIER=jev` switches to Jev.
  */
 export function createClassifier(env: Env): SemanticClassifier {
   switch (env.CLASSIFIER ?? "heuristic") {
     case "heuristic":
       return serverHeuristic;
+    case "jev":
+      if (!env.TYPESAFE_API_KEY)
+        throw new Error("CLASSIFIER is jev but TYPESAFE_API_KEY is not set");
+      return createJevClassifier(env.TYPESAFE_API_KEY);
     default:
       throw new Error(`unknown CLASSIFIER "${env.CLASSIFIER}"`);
   }

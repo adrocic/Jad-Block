@@ -16,6 +16,11 @@ function clientKey(c: AppContext): string {
   return `ip:${c.req.header("cf-connecting-ip") ?? "unknown"}`;
 }
 
+function rateLimited(c: AppContext): Response {
+  c.header("retry-after", "60");
+  return c.json({ error: "rate limited" }, 429);
+}
+
 /**
  * POST /v1/classify: sanitized candidate features in, probabilities out. Never returns
  * selectors, commands, or code (ADR 0002). Request bodies and page text are never logged.
@@ -31,14 +36,7 @@ export async function classify(c: AppContext): Promise<Response> {
     return c.json({ error: "request too large" }, 413);
   }
 
-  const [client, global] = await Promise.all([
-    c.env.CLIENT_LIMITER.limit({ key: clientKey(c) }),
-    c.env.GLOBAL_LIMITER.limit({ key: "global" }),
-  ]);
-  if (!client.success || !global.success) {
-    c.header("retry-after", "60");
-    return c.json({ error: "rate limited" }, 429);
-  }
+  if (!(await c.env.CLIENT_LIMITER.limit({ key: clientKey(c) })).success) return rateLimited(c);
 
   const text = await c.req.text();
   if (new TextEncoder().encode(text).length > MAX_BODY_BYTES) {
@@ -67,6 +65,13 @@ export async function classify(c: AppContext): Promise<Response> {
   const missIndexes = results.flatMap((r, i) => (r ? [] : [i]));
   const misses = candidates.filter((_, i) => results[i] === null);
   if (misses.length > 0) {
+    // The upstream quota is per model call, and each uncached candidate is one call. Cache hits
+    // are free, so they never count against it.
+    const permits = await Promise.all(
+      misses.map(() => c.env.GLOBAL_LIMITER.limit({ key: "global" })),
+    );
+    if (permits.some((p) => !p.success)) return rateLimited(c);
+
     let fresh: Classification[];
     try {
       fresh = await classifier.classify(misses);

@@ -7,10 +7,11 @@ content. Architecture: `docs/architecture.md`. Settled decisions: `docs/adr/` (d
 ## Commands (Bun 1.3+)
 - `bun install` · `bun run check` (Biome + typecheck) · `bun run fix` · `bun test`
 - `bun run build` (Chrome + Firefox) · `bun run dev:chrome` · `bun run dev:firefox` · `bun run dev:api`
+  (`dev:api:jev` for real Jev; key in `apps/api/.dev.vars`)
 - `bun run e2e` (rebuilds Chrome with a test API URL, runs wrangler dev + Playwright Chromium on
   Node, since Playwright hangs under Bun on Windows; run `bun run build` again afterwards for real use)
 - `bun run eval` (fixture precision/recall/breakage; `-- --log <export>` for real data; see the
-  run-evals skill) · `bun run lists:update` (refresh filter-list snapshots, then commit them)
+  run-evals skill; `-- --classifier jev[-replay]` for Jev) · `bun run lists:update` (refresh filter-list snapshots, then commit them)
 
 ## Layout
 `apps/extension` (WXT, vanilla TS/HTML/CSS) · `apps/api` (Hono on Workers) · `packages/*` (pure

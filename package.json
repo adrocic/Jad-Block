@@ -18,6 +18,7 @@
     "dev:chrome": "bun run --filter '@jad-block/extension' dev",
     "dev:firefox": "bun run --filter '@jad-block/extension' dev:firefox",
     "dev:api": "bun run --filter '@jad-block/api' dev",
+    "dev:api:jev": "bun run --filter @jad-block/api dev:jev",
     "lists:update": "bun packages/filter-engine/scripts/update-lists.ts",
     "e2e": "bun run --filter @jad-block/e2e e2e",
     "eval": "bun run --filter @jad-block/eval eval"

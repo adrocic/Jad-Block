@@ -1,0 +1,359 @@
+{
+  "4f84f47d48ed90e1a77806adf7e15f584b648c43ee935b6a880de55e27aee2e2": {
+    "model": "jev-1.13.0",
+    "answers": {
+      "advertisement": {
+        "type": "noul",
+        "noul": 0.96
+      },
+      "sponsored": {
+        "type": "noul",
+        "noul": 0.98
+      },
+      "primaryContent": {
+        "type": "noul",
+        "noul": 0.14
+      },
+      "navigation": {
+        "type": "noul",
+        "noul": 0.02
+      },
+      "userControl": {
+        "type": "noul",
+        "noul": 0.03
+      },
+      "essentialUi": {
+        "type": "noul",
+        "noul": 0.1
+      },
+      "safeToHide": {
+        "type": "noul",
+        "noul": 0.93
+      },
+      "elementType": {
+        "type": "choice",
+        "choice": "sponsored-content",
+        "confidence": 0.52,
+        "probabilities": {
+          "unknown": 0,
+          "editorial-content": 0,
+          "social-content": 0,
+          "navigation": 0,
+          "utility": 0,
+          "advertisement": 0.41,
+          "sponsored-content": 0.59
+        }
+      }
+    },
+    "usage": {
+      "input_tokens": 1513,
+      "output_tokens": 209
+    }
+  },
+  "6b35bd08eb3b1bae7eba241bfcfc389b8e5100bbba4cac4d427e2d02b56a707d": {
+    "model": "jev-1.13.0",
+    "answers": {
+      "advertisement": {
+        "type": "noul",
+        "noul": 0.94
+      },
+      "sponsored": {
+        "type": "noul",
+        "noul": 0.96
+      },
+      "primaryContent": {
+        "type": "noul",
+        "noul": 0.08
+      },
+      "navigation": {
+        "type": "noul",
+        "noul": 0.02
+      },
+      "userControl": {
+        "type": "noul",
+        "noul": 0.03
+      },
+      "essentialUi": {
+        "type": "noul",
+        "noul": 0.09
+      },
+      "safeToHide": {
+        "type": "noul",
+        "noul": 0.93
+      },
+      "elementType": {
+        "type": "choice",
+        "choice": "advertisement",
+        "confidence": 0.54,
+        "probabilities": {
+          "unknown": 0,
+          "editorial-content": 0,
+          "social-content": 0,
+          "navigation": 0,
+          "utility": 0,
+          "advertisement": 0.61,
+          "sponsored-content": 0.39
+        }
+      }
+    },
+    "usage": {
+      "input_tokens": 1480,
+      "output_tokens": 209
+    }
+  },
+  "744396208876dc47023e441621d7fde21030362046142c8c33eb088ba4cc4cc2": {
+    "model": "jev-1.13.0",
+    "answers": {
+      "advertisement": {
+        "type": "noul",
+        "noul": 0.94
+      },
+      "sponsored": {
+        "type": "noul",
+        "noul": 0.97
+      },
+      "primaryContent": {
+        "type": "noul",
+        "noul": 0.04
+      },
+      "navigation": {
+        "type": "noul",
+        "noul": 0.02
+      },
+      "userControl": {
+        "type": "noul",
+        "noul": 0.04
+      },
+      "essentialUi": {
+        "type": "noul",
+        "noul": 0.09
+      },
+      "safeToHide": {
+        "type": "noul",
+        "noul": 0.95
+      },
+      "elementType": {
+        "type": "choice",
+        "choice": "advertisement",
+        "confidence": 1,
+        "probabilities": {
+          "unknown": 0,
+          "editorial-content": 0,
+          "social-content": 0,
+          "navigation": 0,
+          "utility": 0,
+          "advertisement": 1,
+          "sponsored-content": 0
+        }
+      }
+    },
+    "usage": {
+      "input_tokens": 1494,
+      "output_tokens": 209
+    }
+  },
+  "7b95de68b7d304b45a58bca33c2ca5dda48720e7ecc3ce401a23cb5de3852814": {
+    "model": "jev-1.13.0",
+    "answers": {
+      "advertisement": {
+        "type": "noul",
+        "noul": 0.93
+      },
+      "sponsored": {
+        "type": "noul",
+        "noul": 0.84
+      },
+      "primaryContent": {
+        "type": "noul",
+        "noul": 0.03
+      },
+      "navigation": {
+        "type": "noul",
+        "noul": 0.02
+      },
+      "userControl": {
+        "type": "noul",
+        "noul": 0.02
+      },
+      "essentialUi": {
+        "type": "noul",
+        "noul": 0.07
+      },
+      "safeToHide": {
+        "type": "noul",
+        "noul": 0.95
+      },
+      "elementType": {
+        "type": "choice",
+        "choice": "advertisement",
+        "confidence": 1,
+        "probabilities": {
+          "unknown": 0,
+          "editorial-content": 0,
+          "social-content": 0,
+          "navigation": 0,
+          "utility": 0,
+          "advertisement": 1,
+          "sponsored-content": 0
+        }
+      }
+    },
+    "usage": {
+      "input_tokens": 1477,
+      "output_tokens": 209
+    }
+  },
+  "ab542b6b38cd92cfa5acb647dc739704aac1057ff03fdb5e4d1972e7f87251f7": {
+    "model": "jev-1.13.0",
+    "answers": {
+      "advertisement": {
+        "type": "noul",
+        "noul": 0.91
+      },
+      "sponsored": {
+        "type": "noul",
+        "noul": 0.93
+      },
+      "primaryContent": {
+        "type": "noul",
+        "noul": 0.03
+      },
+      "navigation": {
+        "type": "noul",
+        "noul": 0.01
+      },
+      "userControl": {
+        "type": "noul",
+        "noul": 0.04
+      },
+      "essentialUi": {
+        "type": "noul",
+        "noul": 0.06
+      },
+      "safeToHide": {
+        "type": "noul",
+        "noul": 0.94
+      },
+      "elementType": {
+        "type": "choice",
+        "choice": "advertisement",
+        "confidence": 1,
+        "probabilities": {
+          "unknown": 0,
+          "editorial-content": 0,
+          "social-content": 0,
+          "navigation": 0,
+          "utility": 0,
+          "advertisement": 1,
+          "sponsored-content": 0
+        }
+      }
+    },
+    "usage": {
+      "input_tokens": 1470,
+      "output_tokens": 209
+    }
+  },
+  "d989996728d37906fa8b06124024a3ae6f3f14dd56033f941ad75b9e4bc2f4ea": {
+    "model": "jev-1.13.0",
+    "answers": {
+      "advertisement": {
+        "type": "noul",
+        "noul": 0.87
+      },
+      "sponsored": {
+        "type": "noul",
+        "noul": 0.96
+      },
+      "primaryContent": {
+        "type": "noul",
+        "noul": 0.24
+      },
+      "navigation": {
+        "type": "noul",
+        "noul": 0.02
+      },
+      "userControl": {
+        "type": "noul",
+        "noul": 0.03
+      },
+      "essentialUi": {
+        "type": "noul",
+        "noul": 0.11
+      },
+      "safeToHide": {
+        "type": "noul",
+        "noul": 0.91
+      },
+      "elementType": {
+        "type": "choice",
+        "choice": "sponsored-content",
+        "confidence": 0.86,
+        "probabilities": {
+          "unknown": 0,
+          "editorial-content": 0,
+          "social-content": 0,
+          "navigation": 0,
+          "utility": 0,
+          "advertisement": 0.12,
+          "sponsored-content": 0.88
+        }
+      }
+    },
+    "usage": {
+      "input_tokens": 1471,
+      "output_tokens": 209
+    }
+  },
+  "f1fe7ec7f2127d3d0528bc5df1a9ef0e6389fb53a2ce08027e683f62d3cb994d": {
+    "model": "jev-1.13.0",
+    "answers": {
+      "advertisement": {
+        "type": "noul",
+        "noul": 0.95
+      },
+      "sponsored": {
+        "type": "noul",
+        "noul": 0.96
+      },
+      "primaryContent": {
+        "type": "noul",
+        "noul": 0.06
+      },
+      "navigation": {
+        "type": "noul",
+        "noul": 0.01
+      },
+      "userControl": {
+        "type": "noul",
+        "noul": 0.04
+      },
+      "essentialUi": {
+        "type": "noul",
+        "noul": 0.07
+      },
+      "safeToHide": {
+        "type": "noul",
+        "noul": 0.96
+      },
+      "elementType": {
+        "type": "choice",
+        "choice": "advertisement",
+        "confidence": 1,
+        "probabilities": {
+          "unknown": 0,
+          "editorial-content": 0,
+          "social-content": 0,
+          "navigation": 0,
+          "utility": 0,
+          "advertisement": 1,
+          "sponsored-content": 0
+        }
+      }
+    },
+    "usage": {
+      "input_tokens": 1475,
+      "output_tokens": 209
+    }
+  }
+}

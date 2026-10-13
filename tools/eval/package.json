@@ -7,12 +7,14 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@jad-block/api": "workspace:*",
     "@jad-block/candidate-detector": "workspace:*",
     "@jad-block/classifier": "workspace:*",
     "@jad-block/decision-engine": "workspace:*",
     "@jad-block/feature-extractor": "workspace:*",
     "@jad-block/fixtures": "workspace:*",
     "@jad-block/privacy": "workspace:*",
-    "@jad-block/schemas": "workspace:*"
+    "@jad-block/schemas": "workspace:*",
+    "@typesafe-ai/sdk": "0.6.0"
   }
 }
