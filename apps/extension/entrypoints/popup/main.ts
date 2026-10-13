@@ -1,16 +1,11 @@
+import type { Mode } from "@jad-block/decision-engine";
 import { browser } from "wxt/browser";
 import { describeLocation } from "@/src/describe";
 import type { BackgroundMessage, ContentMessage, SemanticEntry } from "@/src/messages";
+import { asksIsAd, popupEntries, stateLabel } from "@/src/popup-list";
 import { disabledSitesSetting, isHostDisabled, modeSetting } from "@/src/settings";
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
-
-const STATE_LABELS: Record<SemanticEntry["state"], string> = {
-  hidden: "Hidden",
-  "would-hide": "Would hide",
-  retained: "Kept",
-  restored: "Restored",
-};
 
 function describe(entry: SemanticEntry): string {
   const type = entry.classification.elementType.replace("-", " ");
@@ -31,14 +26,14 @@ function sendToTab<T>(tabId: number, message: ContentMessage): Promise<T | undef
 /** Fingerprints answered while this popup is open, so re-renders don't ask again. */
 const answered = new Set<string>();
 
-function renderEntry(host: string, tabId: number, entry: SemanticEntry): HTMLElement {
+function renderEntry(host: string, tabId: number, mode: Mode, entry: SemanticEntry): HTMLElement {
   const template = $<HTMLTemplateElement>("entry-template");
   const li = template.content.firstElementChild?.cloneNode(true) as HTMLElement;
   const q = <T extends HTMLElement>(selector: string) => li.querySelector(selector) as T;
 
   // textContent only: entry text comes from web pages and must never be parsed as HTML.
   q(".entry-kind").textContent = describe(entry);
-  q(".entry-state").textContent = STATE_LABELS[entry.state];
+  q(".entry-state").textContent = stateLabel(entry.state, mode);
   q(".entry-where").textContent = describeLocation(entry.features);
   q(".entry-text").textContent = entry.features.untrustedText;
 
@@ -79,14 +74,14 @@ function renderEntry(host: string, tabId: number, entry: SemanticEntry): HTMLEle
 
   if (answered.has(entry.fingerprint)) {
     thanks.hidden = false;
-  } else if (entry.state === "would-hide") {
+  } else if (asksIsAd(entry, mode)) {
     ask("Is this an ad?", "popup", true);
   } else if (entry.state === "hidden") {
     restore.hidden = false;
     restore.addEventListener("click", async () => {
       await sendToTab(tabId, { type: "restore", id: entry.id });
       restore.hidden = true;
-      q(".entry-state").textContent = STATE_LABELS.restored;
+      q(".entry-state").textContent = stateLabel("restored", mode);
       ask("Wrongly hidden?", "restore-feedback", false);
     });
   }
@@ -124,16 +119,17 @@ async function render(): Promise<void> {
 
   const entries = (await sendToTab<SemanticEntry[]>(tabId, { type: "list-semantic" })) ?? [];
   const flagged = entries.filter((e) => e.state !== "retained");
+  const rows = popupEntries(entries, mode);
   const hidden = entries.filter((e) => e.state === "hidden").length;
   $("summary").textContent =
     mode === "shadow"
-      ? `${flagged.length} detected semantically · ${entries.length} checked`
+      ? `${flagged.length} would hide · ${entries.length} checked`
       : `${hidden} hidden semantically · ${entries.length} checked`;
   $("shadow-note").hidden = mode !== "shadow";
 
   const list = $("entries");
-  list.replaceChildren(...flagged.map((entry) => renderEntry(host, tabId, entry)));
-  $("entries-hint").hidden = flagged.length === 0;
+  list.replaceChildren(...rows.map((entry) => renderEntry(host, tabId, mode, entry)));
+  $("entries-hint").hidden = rows.length === 0;
 
   const restoreAll = $<HTMLButtonElement>("restore-all");
   restoreAll.hidden = hidden === 0;
