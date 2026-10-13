@@ -4,7 +4,7 @@ import type { CandidateFeatures } from "@jad-block/schemas";
 import { browser } from "wxt/browser";
 import { Highlighter } from "@/src/content/highlighter";
 import { SemanticPipeline } from "@/src/content/pipeline";
-import { observeAdditions } from "@/src/content/scanner";
+import { startScanning } from "@/src/content/start";
 import type {
   BackgroundMessage,
   ClassifyResult,
@@ -57,11 +57,8 @@ export default defineContentScript({
     });
 
     const start = () => {
-      void pipeline.scan(document.body, false);
-      const stop = observeAdditions(document.body, (roots) => {
-        for (const root of roots) void pipeline.scan(root, true);
-      });
-      ctx.onInvalidated(stop);
+      const stop = startScanning(document, pipeline);
+      if (stop) ctx.onInvalidated(stop);
     };
     if (document.readyState === "loading") {
       document.addEventListener("DOMContentLoaded", start, { once: true });
