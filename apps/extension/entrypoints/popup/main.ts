@@ -1,4 +1,5 @@
 import { browser } from "wxt/browser";
+import { describeLocation } from "@/src/describe";
 import type { BackgroundMessage, ContentMessage, SemanticEntry } from "@/src/messages";
 import { disabledSitesSetting, isHostDisabled, modeSetting } from "@/src/settings";
 
@@ -38,7 +39,19 @@ function renderEntry(host: string, tabId: number, entry: SemanticEntry): HTMLEle
   // textContent only: entry text comes from web pages and must never be parsed as HTML.
   q(".entry-kind").textContent = describe(entry);
   q(".entry-state").textContent = STATE_LABELS[entry.state];
+  q(".entry-where").textContent = describeLocation(entry.features);
   q(".entry-text").textContent = entry.features.untrustedText;
+
+  // Outline the element on the page while this row is pointed at or focused.
+  const highlight = async () => {
+    const found = await sendToTab<boolean>(tabId, { type: "highlight", id: entry.id });
+    li.classList.toggle("not-found", found === false);
+  };
+  const unhighlight = () => void sendToTab(tabId, { type: "highlight", id: null });
+  li.addEventListener("mouseenter", () => void highlight());
+  li.addEventListener("mouseleave", unhighlight);
+  li.addEventListener("focusin", () => void highlight());
+  li.addEventListener("focusout", unhighlight);
 
   const restore = q<HTMLButtonElement>(".restore");
   const question = q(".question");
@@ -120,6 +133,7 @@ async function render(): Promise<void> {
 
   const list = $("entries");
   list.replaceChildren(...flagged.map((entry) => renderEntry(host, tabId, entry)));
+  $("entries-hint").hidden = flagged.length === 0;
 
   const restoreAll = $<HTMLButtonElement>("restore-all");
   restoreAll.hidden = hidden === 0;

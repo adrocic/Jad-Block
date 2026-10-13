@@ -2,6 +2,7 @@ import { domMeasure } from "@jad-block/candidate-detector";
 import { sensitiveCategory } from "@jad-block/privacy";
 import type { CandidateFeatures } from "@jad-block/schemas";
 import { browser } from "wxt/browser";
+import { Highlighter } from "@/src/content/highlighter";
 import { SemanticPipeline } from "@/src/content/pipeline";
 import { observeAdditions } from "@/src/content/scanner";
 import type {
@@ -39,12 +40,19 @@ export default defineContentScript({
       onRestore: (fingerprints: string[]) => void send({ type: "restored", host, fingerprints }),
     });
 
+    const highlighter = new Highlighter();
+    ctx.onInvalidated(() => highlighter.clear());
+
     browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
       if (sender.id !== browser.runtime.id) return false;
       const m = message as ContentMessage;
       if (m.type === "list-semantic") sendResponse(pipeline.list());
       else if (m.type === "restore") sendResponse(pipeline.restore(m.id));
       else if (m.type === "restore-all") sendResponse(pipeline.restoreAll());
+      else if (m.type === "highlight")
+        sendResponse(
+          m.id === null ? highlighter.clear() : highlighter.show(pipeline.element(m.id)),
+        );
       return false;
     });
 

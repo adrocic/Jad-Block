@@ -46,4 +46,6 @@ export type BackgroundMessage =
 export type ContentMessage =
   | { type: "list-semantic" }
   | { type: "restore"; id: string }
-  | { type: "restore-all" };
+  | { type: "restore-all" }
+  /** Outline an entry's element on the page (null clears). Responds with whether it could. */
+  | { type: "highlight"; id: string | null };

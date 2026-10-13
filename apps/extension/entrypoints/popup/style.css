@@ -38,10 +38,32 @@ header {
 }
 
 #entries li {
-  padding: 8px 0;
+  padding: 8px 6px;
+  margin: 0 -6px;
+  border-radius: 4px;
   border-top: 1px solid var(--line);
   display: grid;
   gap: 4px;
+}
+
+#entries li:hover,
+#entries li:focus-within {
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  outline: none;
+}
+
+#entries li.not-found .entry-where::after {
+  content: " · not visible on the page";
+  color: var(--muted);
+}
+
+#entries-hint {
+  font-size: 12px;
+  margin: 0 0 4px;
+}
+
+.entry-where {
+  font-size: 12px;
 }
 
 .entry-head {

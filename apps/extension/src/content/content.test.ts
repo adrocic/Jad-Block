@@ -93,6 +93,15 @@ describe("SemanticPipeline", () => {
     expect(pipeline.list()).toHaveLength(2);
   });
 
+  test("each entry can be traced back to its element (for highlighting)", async () => {
+    const { fixture, pipeline } = setup("shadow");
+    await pipeline.scan(fixture.root, false);
+    const entries = pipeline.list();
+    expect(entries.length).toBeGreaterThan(0);
+    for (const entry of entries) expect(pipeline.element(entry.id)?.isConnected).toBe(true);
+    expect(pipeline.element("no-such-id")).toBeUndefined();
+  });
+
   test("classifier failure degrades silently", async () => {
     const { fixture, pipeline } = setup("enforce", { failing: true });
     await pipeline.scan(fixture.root, false);

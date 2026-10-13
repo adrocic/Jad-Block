@@ -33,6 +33,8 @@ export class SemanticPipeline {
   /** L1 cache: fingerprint → result, for this page's lifetime. */
   private readonly l1 = new Map<string, ClassifyResult>();
   private readonly entries = new Map<string, SemanticEntry>();
+  /** Entry id → its element, weakly, so removed nodes can still be collected. */
+  private readonly elements = new Map<string, WeakRef<Element>>();
   private nextId = 1;
 
   constructor(private readonly options: PipelineOptions) {}
@@ -85,6 +87,7 @@ export class SemanticPipeline {
 
   private apply(element: Element, features: CandidateFeatures, result: ClassifyResult) {
     const id = String(this.nextId++);
+    this.elements.set(id, new WeakRef(element));
     const base = decide(result.classification, features, this.options.mode);
     const decision = result.userOverride ? userOverrideDecision(base.policyVersion) : base;
     let state: SemanticEntry["state"] = "retained";
@@ -99,6 +102,11 @@ export class SemanticPipeline {
       decision,
       state,
     } satisfies SemanticEntry;
+  }
+
+  /** The element behind a popup entry, if it still exists. */
+  element(id: string): Element | undefined {
+    return this.elements.get(id)?.deref();
   }
 
   list(): SemanticEntry[] {
