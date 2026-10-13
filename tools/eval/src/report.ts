@@ -60,7 +60,7 @@ export function sweepReport(
   source: "fixtures" | "log",
 ): string {
   if (source === "fixtures") {
-    const safe = best ? `${best.minAdOrSponsored}/${best.minSafeToHide}` : "none";
+    const safe = best ? thresholds(best) : "none";
     return [
       "## Threshold sweep (fixtures: sanity check only)",
       "",
@@ -76,14 +76,49 @@ export function sweepReport(
   return [
     "## Threshold sweep",
     "",
-    row(["minAdOrSponsored", "minSafeToHide", "Precision", "Recall", "TP", "FP", "FN"]),
-    row(["---", "---", "---", "---", "---", "---", "---"]),
-    ...top.map((r) => row([r.minAdOrSponsored, r.minSafeToHide, ...confusionCells(r.confusion)])),
+    row([
+      "minAdOrSponsored",
+      "minSafeToHide",
+      "maxPrimaryContent",
+      "maxEssentialUi",
+      "Precision",
+      "Recall",
+      "TP",
+      "FP",
+      "FN",
+    ]),
+    row(["---", "---", "---", "---", "---", "---", "---", "---", "---"]),
+    ...top.map((r) =>
+      row([
+        r.minAdOrSponsored,
+        r.minSafeToHide,
+        r.maxPrimaryContent,
+        r.maxEssentialUi,
+        ...confusionCells(r.confusion),
+      ]),
+    ),
     "",
     best
-      ? `**Recommendation:** minAdOrSponsored=${best.minAdOrSponsored}, minSafeToHide=${best.minSafeToHide} ` +
+      ? `**Recommendation:** ${thresholds(best)} ` +
         `(precision ${pct(best.precision)}, recall ${pct(best.recall)} on ${best.confusion.tp + best.confusion.fp} hides). ` +
-        "Update DEFAULT_POLICY and bump its version (packages/decision-engine/AGENTS.md)."
+        "Update DEFAULT_POLICY and bump its version (packages/decision-engine/AGENTS.md).\n\n" +
+        support(best)
       : `**No recommendation:** no thresholds reach ${pct(target)} precision with at least ${minHidden} hides. Keep the current policy and label more data.`,
   ].join("\n");
+}
+
+function thresholds(r: SweepRow): string {
+  return (
+    `minAdOrSponsored=${r.minAdOrSponsored}, minSafeToHide=${r.minSafeToHide}, ` +
+    `maxPrimaryContent=${r.maxPrimaryContent}, maxEssentialUi=${r.maxEssentialUi}`
+  );
+}
+
+/** How much the precision figure rests on: it is measured only against "not an ad" labels. */
+export function support(r: SweepRow): string {
+  const negatives = r.confusion.fp + r.confusion.tn;
+  const base = `Precision rests on ${negatives} "not an ad" label${negatives === 1 ? "" : "s"}.`;
+  return negatives < 10
+    ? `${base} That is thin evidence: enable enforce mode cautiously and watch the restore rate.`
+    : base;
 }

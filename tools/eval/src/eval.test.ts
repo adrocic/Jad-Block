@@ -6,6 +6,7 @@ import { evaluateFixtures, type LabeledItem, tally } from "./fixtures";
 import { replayJev } from "./jev";
 import { analyzeLog } from "./log";
 import { confusion, precision, recall } from "./metrics";
+import { support } from "./report";
 import { recommend, sweepThresholds } from "./sweep";
 
 describe("metrics", () => {
@@ -170,6 +171,38 @@ describe("threshold sweep", () => {
 
   test("requires minimum support before recommending anything", () => {
     expect(recommend(sweepThresholds(items.slice(0, 5)), 0.99, 20)).toBeNull();
+  });
+
+  test("keeps the tightest veto ceilings when looser ones gain nothing", () => {
+    const best = recommend(sweepThresholds(items), 0.99);
+    expect(best?.maxEssentialUi).toBe(0.05);
+    expect(best?.maxPrimaryContent).toBe(0.05);
+  });
+
+  test("loosens the essential-UI ceiling for a cautious classifier, only as far as needed", () => {
+    // Jev-like: clear ads, but "would the reader lose something?" around 0.1, not 0.01.
+    const cautious = items.map((item) => ({
+      ...item,
+      classification: { ...item.classification, essentialUi: item.isAd ? 0.09 : 0.3 },
+    }));
+    const best = recommend(sweepThresholds(cautious), 0.99);
+    expect(best?.recall).toBe(1);
+    expect(best?.maxEssentialUi).toBe(0.1);
+  });
+
+  test("never loosens a ceiling past 0.2", () => {
+    const anxious = items.map((item) => ({
+      ...item,
+      classification: { ...item.classification, essentialUi: 0.25 },
+    }));
+    expect(recommend(sweepThresholds(anxious), 0.99)).toBeNull();
+  });
+
+  test("the report says how many 'not an ad' labels precision rests on", () => {
+    const best = recommend(sweepThresholds(items), 0.99);
+    expect(best && support(best)).toBe('Precision rests on 10 "not an ad" labels.');
+    const thin = recommend(sweepThresholds(items.slice(0, 25)), 0.99);
+    expect(thin && support(thin)).toContain("thin evidence");
   });
 
   test("local vetoes still apply during the sweep", () => {
