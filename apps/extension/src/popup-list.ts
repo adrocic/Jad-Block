@@ -11,10 +11,15 @@ const ORDER: Record<SemanticEntry["state"], number> = {
 /**
  * Popup rows. Shadow mode lists everything that was checked, so the user can label kept elements
  * too: thresholds can't be tuned from would-hide labels alone, and a strict classifier may
- * produce none. Enforce mode lists only what was acted on. Most actionable first.
+ * produce none. Enforce mode lists only what was acted on. Elements that weren't visible are left
+ * out unless we acted on them: the user can't judge what they can't see. Most actionable first.
  */
 export function popupEntries(entries: readonly SemanticEntry[], mode: Mode): SemanticEntry[] {
-  const shown = mode === "shadow" ? entries : entries.filter((e) => e.state !== "retained");
+  const shown = entries.filter((e) => {
+    if (e.state === "hidden" || e.state === "restored") return true;
+    if (e.features.size === "hidden") return false;
+    return mode === "shadow" || e.state === "would-hide";
+  });
   return [...shown].sort((a, b) => ORDER[a.state] - ORDER[b.state]);
 }
 

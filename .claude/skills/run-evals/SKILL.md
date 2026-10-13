@@ -12,8 +12,11 @@ sanity-check sweep. **Never tune thresholds from fixtures**: they're a few hand-
 
 ## Real data (threshold tuning)
 1. The user browses with the extension in shadow mode and answers "Is this an ad?" in the popup.
+   Labelling rule: an empty ad space (a slot whose ad was blocked) is an ad. "No" means real
+   content, navigation or controls, which is the breakage that precision protects.
 2. They export the log from the options page into `datasets/` (gitignored, never commit it).
-3. `bun run eval -- --log datasets/<export>.json [--target 0.99] [--min-hidden 20]`
+3. `bun run eval -- --log datasets/<export>.json [--log <another>.json] [--target 0.99] [--min-hidden 20]`
+   (repeat `--log` to combine exports; overlapping events are counted once)
    reports volumes, restore rate, precision vs. labels, and a threshold sweep.
 
 ## Changing DEFAULT_POLICY

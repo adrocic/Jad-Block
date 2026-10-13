@@ -30,6 +30,19 @@ describe("popupEntries", () => {
     expect(popupEntries(strict, "shadow")).toHaveLength(2);
   });
 
+  test("elements that weren't visible are left out, unless we acted on them", () => {
+    const invisible = (id: string, state: SemanticEntry["state"]) => ({
+      ...entry(id, state),
+      features: sampleFeatures({ size: "hidden" }),
+    });
+    const list = [
+      invisible("1", "retained"),
+      invisible("2", "would-hide"),
+      invisible("3", "hidden"),
+    ];
+    expect(popupEntries(list, "shadow").map((e) => e.id)).toEqual(["3"]);
+  });
+
   test("enforce mode lists only what was acted on", () => {
     const acted = [entry("1", "retained"), entry("2", "hidden"), entry("3", "restored")];
     expect(popupEntries(acted, "enforce").map((e) => e.id)).toEqual(["2", "3"]);
